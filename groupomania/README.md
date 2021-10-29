@@ -1,4 +1,4 @@
-# groupomania-social
+# groupomania
 
 ## Project setup
 ```
