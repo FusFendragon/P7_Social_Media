@@ -1,10 +1,20 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <TheNavigation />
+    <router-view :key="$route.path" />
   </div>
-  <router-view/>
 </template>
+
+<script>
+import TheNavigation from '@/components/TheNaviguation'
+
+export default {
+  components: {
+    TheNavigation
+  },
+}
+</script>
+
 
 <style>
 #app {
@@ -15,16 +25,4 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
