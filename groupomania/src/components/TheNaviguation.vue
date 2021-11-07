@@ -48,12 +48,12 @@ header img {
 
 #nav a {
 	font-weight: bold;
-	color: #2c3e50;
+	color: #DBD0C0;
 	padding: 0px 10px;
 }
 
 #nav a.router-link-exact-active {
-	color: #ff0c71;
+	color: #F9CF93;
 }
 .nav-links {
     display: flex;

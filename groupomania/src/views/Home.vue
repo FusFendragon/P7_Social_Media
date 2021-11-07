@@ -1,6 +1,5 @@
 <template>
 	<div class="home">
-
 		<h1>All Post</h1>
 		<div class="posts">
 			<div v-for="post in posts" :key="post.id" class="post">
@@ -42,12 +41,12 @@ export default {
 <style scoped>
 .home {
 	max-width: 1400px;
-	margin: 0 auto;
 }
 .posts {
 	display: flex;
 	flex-direction: column;
 	max-width: 550px;
+	margin: 0 auto;
 }
 .post {
 	display: flex;

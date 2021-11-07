@@ -41,9 +41,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	max-width: 550px;
-	border: 2px solid #DBD0C0;
 	border-radius: 10px;
-	margin-bottom: 20px;
+	margin: 0 auto;
 }
 .author {
 	display: flex;

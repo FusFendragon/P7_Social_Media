@@ -13,7 +13,7 @@ const routes = [
 		component: () => import(/* webpackChunkName: "Profil" */ "../views/Profil"),
 	},
 	{
-		path: "/MyProfil/:id",
+		path: "/MyProfil",
 		name: "MyProfil",
 		component: () => import(/* webpackChunkName: "MyProfil" */ "../views/MyProfil"),
 	},
