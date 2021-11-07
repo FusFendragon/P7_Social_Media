@@ -10,12 +10,13 @@
 					<p>{{ user.bio }}</p>
 				</div>
 			</div>
-			<div id="history-post">
+			<div id="history-posts">
 				<h3>Posts</h3>
+				<div class="hr"></div>
 				<div v-for="post in posts" :key="post.id">
 				<div v-if="user.id == post.authorId">
 					<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
-						<h4> {{ post.date }}: {{ post.message }} </h4>
+						<h4> <span class="date">{{ post.date }}:</span><br /> {{ post.message }} </h4>
 					</router-link>
 				</div>
 			</div>
@@ -64,7 +65,10 @@ section {
 }
 #user-card {
 	display: flex;
+	background-color: #FAEEE0;
+	padding: 10px;
 	border: 2px solid #F9E4C8;
+	border-radius: 20px;
 }
 #user-info {
 	align-self: center;
@@ -73,7 +77,35 @@ section {
 #user-info p {
 	text-align: justify;
 }
-#history-posts{
-	max-width: 60%;
+#history-posts {
+	max-width: 40%;
+	padding: 15px;
+	border-right: 2px solid #F9E4C8;
+}
+#history-posts h3 {
+	text-align: left;
+	margin-bottom: 2px;
+}
+#history-posts .hr {
+	height:2px;
+   	width:30%;
+  	background-color:#DBD0C0;
+	margin: 0px 0px 15px 0px;
+}
+#history-posts h4 {
+	text-align: justify;
+	padding: 10px 0px;
+	margin: 0px;
+	border-bottom: 2px solid #DBD0C0;
+}
+#history-posts h4:hover {
+	background-color: rgb(243, 243, 243);
+}
+#history-posts .date {
+	text-decoration: underline;
+}
+.router-style {
+	text-decoration: none;
+	color: #2c3e50;
 }
 </style>

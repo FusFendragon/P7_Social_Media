@@ -70,7 +70,7 @@ export default {
 .hr {
 	height:2px;
    	width:45%;
-  	background-color:#F9CF93;
+  	background-color:#DBD0C0;
 	margin: 0px 0px 5px 10px;
 }
 .post h2 {
