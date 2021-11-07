@@ -1,21 +1,23 @@
 <template>
+    <header>
+        <router-link to='/'>
+            <img src="@/assets/logo.png" alt="Groupomania">
+        </router-link>
 	<nav id="nav">
 		<ul class="nav-links">
             <li class="links">
                 <router-link to='/'>
-                    Home
+                    Accueil
                 </router-link>
             </li>
-            <li v-for="user in users" :key="user.name" class="links">
-                <router-link :to="{
-                    name: 'UsersAccount',
-                    params: { id: user.id }
-                }">
-                {{ user.name }}
+            <li class="links">
+                <router-link to='/MyProfil'>
+                    Mon compte
                 </router-link>
             </li>
         </ul>
 	</nav>
+    </header>
 </template>
 
 <script>
@@ -31,6 +33,13 @@ export default {
 </script>
 
 <style scoped>
+header {
+    display: flex;
+    align-items: center;
+}
+header img {
+    width: 80%;
+}
 #nav {
 	display: flex;
 	justify-content: center;

@@ -1,54 +1,42 @@
 <template>
-	<div class="home">
-
-		<h1>All Post</h1>
-		<div class="posts">
-			<div v-for="post in posts" :key="post.id" class="post">
-				<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
-					<div v-for="user in users" :key="user.id" class="author">
-						<img v-if="user.id === post.authorId" :src="require(`@/assets/${user.image}`)" />
-						<h2 v-if="user.id === post.authorId">{{ user.name }}</h2>
-					</div>
-				</router-link>
-				<span class="hr"></span>
-				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
-		<p>{{ post.message }}</p>
-		<div class="stats">
-			<span class="like">{{ post.like }}</span>
-			<span class="date">{{ post.date }}</span>
-		</div>
-
-				</router-link>
+	<section>
+		<div class="post">
+			<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
+				<div v-for="user in users" :key="user.id" class="author">
+					<img v-if="user.id === post.authorId" :src="require(`@/assets/${user.image}`)" />
+					<h2 v-if="user.id === post.authorId">{{ user.name }}</h2>
+				</div>
+			</router-link>
+			<p>{{ post.message }}</p>
+			<div class="stats">
+				<span class="like">{{ post.like }}</span>
+				<span class="date">{{ post.date }}</span>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
-import accounts from "@/accounts.js";
 import posts from "@/posts.js";
+import accounts from "@/accounts.js";
 export default {
-	name: "Home",
-	components: {},
 	data() {
 		return {
+			postId: this.$route.params.id,
 			users: accounts.users,
-			posts : posts.posts
 		};
+	},
+	computed: {
+		post() {
+			return posts.posts.find((post) => {
+				return post.id == this.postId;
+			});
+		},
 	},
 };
 </script>
 
 <style scoped>
-.home {
-	max-width: 1400px;
-	margin: 0 auto;
-}
-.posts {
-	display: flex;
-	flex-direction: column;
-	max-width: 550px;
-}
 .post {
 	display: flex;
 	flex-direction: column;
