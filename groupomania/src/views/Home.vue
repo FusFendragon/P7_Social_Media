@@ -1,6 +1,5 @@
 <template>
 	<div class="home">
-		<h1>All Post</h1>
 		<div class="posts">
 			<div v-for="post in posts" :key="post.id" class="post">
 				<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">

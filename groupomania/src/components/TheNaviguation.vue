@@ -43,7 +43,7 @@ header img {
 #nav {
 	display: flex;
 	justify-content: center;
-	padding: 30px;
+	padding: 15px;
 }
 
 #nav a {
@@ -57,6 +57,7 @@ header img {
 }
 .nav-links {
     display: flex;
+    padding-left: 0px;
 }
 .links {
     list-style: none;

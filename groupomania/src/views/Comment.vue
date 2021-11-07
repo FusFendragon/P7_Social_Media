@@ -9,7 +9,7 @@
 			</router-link>
 			<p>{{ post.message }}</p>
 			<div class="stats">
-				<span class="like">{{ post.like }}</span>
+				<span class="like"> {{ post.like }}</span>
 				<span class="date">{{ post.date }}</span>
 			</div>
 		</div>
