@@ -5,9 +5,6 @@ const Post = db.define('post', {
     authorId: {
        type: Sequelize.STRING
     },
-    createdAt: {
-        type: Sequelize.STRING
-     },
      usersLike: {
         type: Sequelize.STRING
      },
