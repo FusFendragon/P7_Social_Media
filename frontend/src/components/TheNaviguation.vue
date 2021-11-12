@@ -21,15 +21,7 @@
 </template>
 
 <script>
-import accounts from "@/accounts";
-export default {
-    data() {
-        return {
-            userId: this.$route.params.id,
-            users: accounts.users
-        }
-    }
-}
+
 </script>
 
 <style scoped>

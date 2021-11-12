@@ -8,6 +8,7 @@
 						<h2 v-if="user.id === post.authorId">{{ user.name }}</h2>
 					</div>
 				</router-link>
+				<DeleteButton />
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
 		<p>{{ post.message }}</p>
@@ -25,9 +26,12 @@
 <script>
 import accounts from "@/accounts.js";
 import posts from "@/posts.js";
+import DeleteButton from "@/components/DeleteButton.vue"
 export default {
 	name: "Home",
-	components: {},
+	components: {
+		DeleteButton
+	},
 	data() {
 		return {
 			users: accounts.users,
@@ -49,6 +53,7 @@ export default {
 }
 .post {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	max-width: 550px;
 	border: 2px solid #DBD0C0;
@@ -63,9 +68,15 @@ export default {
 	height: 30px;
 	align-self: center;
 	object-fit: cover;
-	border: 1px solid #F9CF93;
+	border: 1px solid #DBD0C0;
 	border-radius: 50%;
 	margin: 15px 0px 10px 5px;
+}
+.delete-button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 20px;
 }
 .hr {
 	height:2px;
