@@ -1,7 +1,7 @@
 <template>
 	<div id="login-form">
 		<form method="POST">
-			<h2>Connexion</h2>
+			<h2>Inscription</h2>
 
 			<label><b>Adresse e-mail</b></label>
 			<input type="text" placeholder="Entrer votre e-mail" name="username" required />
@@ -9,7 +9,16 @@
 			<label><b>Mot de passe</b></label>
 			<input type="password" placeholder="Entrer votre mot de passe" name="password" required />
 
-			<input type="submit" id="submit" value="LOGIN" />
+			<label><b>Nom</b></label>
+			<input type="text" placeholder="Entrer votre mot de passe" name="name" required />
+
+			<label><b>Description de Profil</b></label>
+			<input type="text" placeholder="Entrer votre description" name="bio" />
+
+			<label><b>Image de profil</b></label>
+			<input type="file" placeholder="Télechargez votre image" name="image" required />
+
+			<input type="submit" id="submit" value="Valider" />
 		</form>
 	</div>
 </template>
@@ -19,7 +28,6 @@
 	width: 400px;
 	margin: 20px auto;
 }
-/* Bordered form */
 form {
 	width: 100%;
 	padding: 30px;
@@ -33,9 +41,8 @@ form {
 	padding-bottom: 10px;
 }
 
-/* Full-width inputs */
 input[type="text"],
-input[type="password"] {
+input[type="password"], input[type="file"] {
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -44,7 +51,6 @@ input[type="password"] {
 	box-sizing: border-box;
 }
 
-/* Set a style for all buttons */
 input[type="submit"] {
 	background-color: #f9cf93;
 	color: white;
