@@ -1,36 +1,30 @@
 <template>
-    <header>
-        <router-link to='/'>
-            <img src="@/assets/logo.png" alt="Groupomania">
-        </router-link>
-	<nav id="nav">
-		<ul class="nav-links">
-            <li class="links">
-                <router-link to='/'>
-                    Accueil
-                </router-link>
-            </li>
-            <li class="links">
-                <router-link to='/MyProfil'>
-                    Mon compte
-                </router-link>
-            </li>
-        </ul>
-	</nav>
-    </header>
+	<header>
+		<router-link to="/">
+			<img src="@/assets/logo.png" alt="Groupomania" />
+		</router-link>
+		<nav id="nav">
+			<ul class="nav-links">
+				<li class="links">
+					<router-link to="/"> Accueil </router-link>
+				</li>
+				<li class="links">
+					<router-link to="/MyProfil"> Mon compte </router-link>
+				</li>
+			</ul>
+		</nav>
+	</header>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style scoped>
 header {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 header img {
-    width: 80%;
+	width: 80%;
 }
 #nav {
 	display: flex;
@@ -40,19 +34,19 @@ header img {
 
 #nav a {
 	font-weight: bold;
-	color: #DBD0C0;
+	color: #dbd0c0;
 	padding: 0px 10px;
 }
 
 #nav a.router-link-exact-active {
-	color: #F9CF93;
+	color: #f9cf93;
 }
 .nav-links {
-    display: flex;
-    padding-left: 0px;
+	display: flex;
+	padding-left: 0px;
 }
 .links {
-    list-style: none;
-    padding-right: 20px;
+	list-style: none;
+	padding-right: 20px;
 }
 </style>

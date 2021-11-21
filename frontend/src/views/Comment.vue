@@ -52,14 +52,14 @@ export default {
 	height: 30px;
 	align-self: center;
 	object-fit: cover;
-	border: 1px solid #F9CF93;
+	border: 1px solid #f9cf93;
 	border-radius: 50%;
 	margin: 15px 0px 10px 5px;
 }
 .hr {
-	height:2px;
-   	width:45%;
-  	background-color:#F9CF93;
+	height: 2px;
+	width: 45%;
+	background-color: #f9cf93;
 	margin: 0px 0px 5px 10px;
 }
 .post h2 {

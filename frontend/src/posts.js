@@ -1,5 +1,5 @@
 export default {
-	posts : [
+	posts: [
 		{
 			authorId: 1,
 			date: "02/05/2021",

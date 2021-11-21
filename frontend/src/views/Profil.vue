@@ -4,7 +4,7 @@
 			<div id="user-card">
 				<div>
 					<img :src="require(`@/assets/${user.image}`)" />
-					<h2>{{ user.name }}</h2>				
+					<h2>{{ user.name }}</h2>
 				</div>
 				<div id="user-info">
 					<p>{{ user.bio }}</p>
@@ -14,12 +14,15 @@
 				<h3>Posts</h3>
 				<div class="hr"></div>
 				<div v-for="post in posts" :key="post.id">
-				<div v-if="user.id == post.authorId">
-					<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
-						<h4> <span class="date">{{ post.date }}:</span><br /> {{ post.message }} </h4>
-					</router-link>
+					<div v-if="user.id == post.authorId">
+						<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
+							<h4>
+								<span class="date">{{ post.date }}:</span><br />
+								{{ post.message }}
+							</h4>
+						</router-link>
+					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</section>
@@ -32,7 +35,7 @@ export default {
 	data() {
 		return {
 			userId: this.$route.params.id,
-			posts : posts.posts
+			posts: posts.posts,
 		};
 	},
 	computed: {
@@ -65,9 +68,9 @@ section {
 }
 #user-card {
 	display: flex;
-	background-color: #FAEEE0;
+	background-color: #faeee0;
 	padding: 10px;
-	border: 2px solid #F9E4C8;
+	border: 2px solid #f9e4c8;
 	border-radius: 20px;
 }
 #user-info {
@@ -80,23 +83,23 @@ section {
 #history-posts {
 	max-width: 40%;
 	padding: 15px;
-	border-right: 2px solid #F9E4C8;
+	border-right: 2px solid #f9e4c8;
 }
 #history-posts h3 {
 	text-align: left;
 	margin-bottom: 2px;
 }
 #history-posts .hr {
-	height:2px;
-   	width:30%;
-  	background-color:#DBD0C0;
+	height: 2px;
+	width: 30%;
+	background-color: #dbd0c0;
 	margin: 0px 0px 15px 0px;
 }
 #history-posts h4 {
 	text-align: justify;
 	padding: 10px 0px;
 	margin: 0px;
-	border-bottom: 2px solid #DBD0C0;
+	border-bottom: 2px solid #dbd0c0;
 }
 #history-posts h4:hover {
 	background-color: rgb(243, 243, 243);

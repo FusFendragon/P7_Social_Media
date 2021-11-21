@@ -11,12 +11,11 @@
 				<DeleteButton />
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
-		<p>{{ post.message }}</p>
-		<div class="stats">
-			<span class="like">{{ post.like }}</span>
-			<span class="date">{{ post.date }}</span>
-		</div>
-
+					<p>{{ post.message }}</p>
+					<div class="stats">
+						<span class="like">{{ post.like }}</span>
+						<span class="date">{{ post.date }}</span>
+					</div>
 				</router-link>
 			</div>
 		</div>
@@ -26,16 +25,16 @@
 <script>
 import accounts from "@/accounts.js";
 import posts from "@/posts.js";
-import DeleteButton from "@/components/DeleteButton.vue"
+import DeleteButton from "@/components/DeleteButton.vue";
 export default {
 	name: "Home",
 	components: {
-		DeleteButton
+		DeleteButton,
 	},
 	data() {
 		return {
 			users: accounts.users,
-			posts : posts.posts
+			posts: posts.posts,
 		};
 	},
 };
@@ -56,7 +55,7 @@ export default {
 	position: relative;
 	flex-direction: column;
 	max-width: 550px;
-	border: 2px solid #DBD0C0;
+	border: 2px solid #dbd0c0;
 	border-radius: 10px;
 	margin-bottom: 20px;
 }
@@ -68,7 +67,7 @@ export default {
 	height: 30px;
 	align-self: center;
 	object-fit: cover;
-	border: 1px solid #DBD0C0;
+	border: 1px solid #dbd0c0;
 	border-radius: 50%;
 	margin: 15px 0px 10px 5px;
 }
@@ -79,9 +78,9 @@ export default {
 	width: 20px;
 }
 .hr {
-	height:2px;
-   	width:45%;
-  	background-color:#DBD0C0;
+	height: 2px;
+	width: 45%;
+	background-color: #dbd0c0;
 	margin: 0px 0px 5px 10px;
 }
 .post h2 {
