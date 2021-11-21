@@ -1,37 +1,50 @@
 <template>
 	<section>
-		<div class="post">
+		<div v-for="post in posts" :key="post.id" class="post">
 			<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
 				<div v-for="user in users" :key="user.id" class="author">
-					<img v-if="user.id === post.authorId" :src="require(`@/assets/${user.image}`)" />
-					<h2 v-if="user.id === post.authorId">{{ user.name }}</h2>
+					<img v-if="user.id == post.authorId" :src="require(`@/assets/${user.image}`)" />
+					<h2 v-if="user.id == post.authorId">{{ user.name }}</h2>
 				</div>
 			</router-link>
 			<p>{{ post.message }}</p>
 			<div class="stats">
-				<span class="like"> {{ post.like }}</span>
-				<span class="date">{{ post.date }}</span>
+				<span class="date">{{ post.createdAt }}</span>
+			</div>
+			<div v-for="comment in comments" :key="comment.id" class="comments">
+				<div>
+					{{ comment.message }}
+				</div>
 			</div>
 		</div>
 	</section>
 </template>
 
 <script>
-import posts from "@/posts.js";
 import accounts from "@/accounts.js";
 export default {
 	data() {
 		return {
-			postId: this.$route.params.id,
 			users: accounts.users,
+			posts: [],
+			comments: [],
 		};
 	},
-	computed: {
-		post() {
-			return posts.posts.find((post) => {
-				return post.id == this.postId;
-			});
+	methods: {
+		async fetchPosts() {
+			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`);
+			const data = await res.json();
+			return data;
 		},
+		async fetchComments() {
+			const res = await fetch(`http://localhost:3000/comments/${this.$route.params.id}`);
+			const data = await res.json();
+			return data;
+		},
+	},
+	async created() {
+		this.posts = await this.fetchPosts();
+		this.comments = await this.fetchComments();
 	},
 };
 </script>

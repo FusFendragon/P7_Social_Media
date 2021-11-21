@@ -4,7 +4,7 @@
 			<h2>Inscription</h2>
 
 			<label><b>Adresse e-mail</b></label>
-			<input type="text" placeholder="Entrer votre e-mail" name="username" required />
+			<input type="text" placeholder="Entrer votre e-mail" name="email" required />
 
 			<label><b>Mot de passe</b></label>
 			<input type="password" placeholder="Entrer votre mot de passe" name="password" required />

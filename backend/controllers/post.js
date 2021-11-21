@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-const db = require("../config/database");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {

@@ -4,7 +4,8 @@ const db = require("../config/database");
 
 const commentCtrl = require("../controllers/comment");
 
-// GET ALL POSTS
-router.get("/", commentCtrl.addComment);
+router.get("/add", commentCtrl.createComment);
+router.get("/:id", commentCtrl.getComments);
+router.delete("/:id", commentCtrl.deleteComment);
 
 module.exports = router;

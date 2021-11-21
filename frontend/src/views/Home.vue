@@ -4,8 +4,8 @@
 			<div v-for="post in posts" :key="post.id" class="post">
 				<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
 					<div v-for="user in users" :key="user.id" class="author">
-						<img v-if="user.id === post.authorId" :src="require(`@/assets/${user.image}`)" />
-						<h2 v-if="user.id === post.authorId">{{ user.name }}</h2>
+						<img v-if="user.id == post.authorId" :src="require(`@/assets/${user.image}`)" />
+						<h2 v-if="user.id == post.authorId">{{ user.name }}</h2>
 					</div>
 				</router-link>
 				<DeleteButton />
@@ -13,8 +13,7 @@
 				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
 					<div class="stats">
-						<span class="like">{{ post.like }}</span>
-						<span class="date">{{ post.date }}</span>
+						<span class="date">{{ post.createdAt }}</span>
 					</div>
 				</router-link>
 			</div>
@@ -24,7 +23,6 @@
 
 <script>
 import accounts from "@/accounts.js";
-import posts from "@/posts.js";
 import DeleteButton from "@/components/DeleteButton.vue";
 export default {
 	name: "Home",
@@ -34,8 +32,18 @@ export default {
 	data() {
 		return {
 			users: accounts.users,
-			posts: posts.posts,
+			posts: [],
 		};
+	},
+	methods: {
+		async fetchPosts() {
+			const res = await fetch("http://localhost:3000/posts");
+			const data = await res.json();
+			return data;
+		},
+	},
+	async created() {
+		this.posts = await this.fetchPosts();
 	},
 };
 </script>
