@@ -11,7 +11,7 @@ const User = db.define("user", {
 	Password: {
 		type: Sequelize.STRING,
 	},
-	image: {
+	imageUrl: {
 		type: Sequelize.STRING,
 	},
 	bio: {

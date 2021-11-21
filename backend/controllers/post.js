@@ -4,14 +4,12 @@ const Post = require("../models/post");
 exports.createPost = (req, res, next) => {
 	const data = {
 		authorId: 3,
-		usersLike: 25,
 		message: "Maecenas vel porta lorem.",
 	};
-	let { authorId, usersLike, message } = data;
+	let { authorId, message } = data;
 
 	Post.create({
 		authorId,
-		usersLike,
 		message,
 	})
 		.then(() => res.status(201).json({ message: "Post ajouté !" }))

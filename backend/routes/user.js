@@ -4,7 +4,8 @@ const db = require("../config/database");
 
 const userCtrl = require("../controllers/user");
 
-// GET ALL POSTS
-router.get("/", userCtrl.loginUser);
+
+router.post('/signup', userCtrl.signup);
+router.post('/login', userCtrl.login);
 
 module.exports = router;

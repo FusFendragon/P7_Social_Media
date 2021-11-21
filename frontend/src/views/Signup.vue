@@ -12,16 +12,31 @@
 			<label><b>Nom</b></label>
 			<input type="text" placeholder="Entrer votre mot de passe" name="name" required />
 
+			<label><b>Image de profil</b></label>
+			<input type="file" placeholder="Télechargez votre image" name="imageUrl" required />
+
 			<label><b>Description de Profil</b></label>
 			<input type="text" placeholder="Entrer votre description" name="bio" />
 
-			<label><b>Image de profil</b></label>
-			<input type="file" placeholder="Télechargez votre image" name="image" required />
-
-			<input type="submit" id="submit" value="Valider" />
+			<input type="submit" id="submit" value="Valider" @add-user="addUser" />
 		</form>
 	</div>
 </template>
+
+<script>
+export default {
+	name: "signup",
+	data() {
+		return {
+			email: "",
+			password: "",
+			name: "",
+			imageUrl: "",
+			bio: "",
+		};
+	},
+};
+</script>
 
 <style scoped>
 #login-form {
@@ -42,7 +57,8 @@ form {
 }
 
 input[type="text"],
-input[type="password"], input[type="file"] {
+input[type="password"],
+input[type="file"] {
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
