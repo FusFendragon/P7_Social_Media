@@ -1,32 +1,27 @@
-const express = require('express');
-const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
-const path = require('path');
+const express = require("express");
 
 // Database
-const db = require('./config/database');
+const db = require("./config/database");
 
-async function test () {
-    try {
-       await db.authenticate();
-        console.log('Connecté à la base de données MySQL!');
-        await db.sync({force: true})
-      } catch (error) {
-        console.error('Impossible de se connecter, erreur suivante :', error);
-      }
+async function test() {
+	try {
+		await db.authenticate();
+		console.log("Connecté à la base de données MySQL!");
+		await db.sync({ force: true });
+	} catch (error) {
+		console.error("Impossible de se connecter, erreur suivante :", error);
+	}
 }
 test();
 
-  const app = express();
 
-  app.get('/', (req, res) => res.send('INDEX'));
+const app = express();
 
-  // Post routes
 
-  app.use('/users', require('./routes/user'));
-  app.use('/posts', require('./routes/post'));
-  app.use('/comments', require('./routes/comment'));
+// Post routes
 
-const PORT = process.env.PORT || 5000;
+app.use("/users", require("./routes/user"));
+app.use("/posts", require("./routes/post"));
+app.use("/comments", require("./routes/comment"));
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+module.exports = app;
