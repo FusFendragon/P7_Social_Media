@@ -6,12 +6,16 @@ const path = require('path');
 // Database
 const db = require('./config/database');
 
-try {
-    db.authenticate();
-    console.log('Connecté à la base de données MySQL!');
-  } catch (error) {
-    console.error('Impossible de se connecter, erreur suivante :', error);
-  }
+async function test () {
+    try {
+       await db.authenticate();
+        console.log('Connecté à la base de données MySQL!');
+        await db.sync({force: true})
+      } catch (error) {
+        console.error('Impossible de se connecter, erreur suivante :', error);
+      }
+}
+test();
 
   const app = express();
 
@@ -19,7 +23,9 @@ try {
 
   // Post routes
 
+  app.use('/users', require('./routes/user'));
   app.use('/posts', require('./routes/post'));
+  app.use('/comments', require('./routes/comment'));
 
 const PORT = process.env.PORT || 5000;
 

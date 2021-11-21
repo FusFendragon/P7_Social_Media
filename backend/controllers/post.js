@@ -4,9 +4,9 @@ const db = require('../config/database');
 // ADD POSTS
 exports.createPost = (req, res, next) => {
     const data = {
-        authorId : 1,
-        usersLike : 20,
-        message : "Maecenas vel porta lorem. plagiat"
+        authorId : 3,
+        usersLike : 25,
+        message : "Maecenas vel porta lorem."
     }
     let { authorId, usersLike, message} = data;
 
