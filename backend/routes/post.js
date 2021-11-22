@@ -6,7 +6,7 @@ const postCtrl = require("../controllers/post");
 
 // GET ALL POSTS
 router.get("/", postCtrl.getAllPosts);
-router.get("/add", postCtrl.createPost);
+router.post("/add", postCtrl.createPost);
 router.get("/:id", postCtrl.getOnePost);
 router.delete("/:id", postCtrl.deletePost);
 

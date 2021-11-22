@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../config/database");
 
 const Comment = db.define("comment", {
-	authorId: {
+	userId: {
 		type: Sequelize.STRING,
 	},
 	postId: {

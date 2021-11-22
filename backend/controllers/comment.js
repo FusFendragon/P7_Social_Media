@@ -4,7 +4,7 @@ const Comment = require("../models/comment");
 exports.createComment = (req, res, next) => {
 	const data = {
 		authorId: 2,
-		postId: 1,
+		postId: 9,
 		message: "Ceci est le commentaire du post.",
 	};
 	let { authorId, postId, message } = data;

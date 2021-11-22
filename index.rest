@@ -1,2 +1,18 @@
 
-GET http://localhost:3000/comments/1
+POST http://localhost:3000/users/signup
+Content-Type: "application/json"
+
+{
+    "email": "fezrza",
+    "password": "fezrza",
+    "name": "fezrza"
+}
+
+###
+
+POST http://localhost:3000/posts/add
+Content-Type: "application/json"
+
+{
+    "message": "zerazerazerez"
+}

@@ -1,24 +1,24 @@
 <template>
 	<div id="login-form">
-		<form method="POST">
+		<form @submit="onSubmit">
 			<h2>Inscription</h2>
-
+			<div>{{ signupStatus }}</div>
 			<label><b>Adresse e-mail</b></label>
-			<input type="text" placeholder="Entrer votre e-mail" name="email" required />
+			<input type="text" placeholder="Entrer votre e-mail" name="email" v-model="email" required />
 
 			<label><b>Mot de passe</b></label>
-			<input type="password" placeholder="Entrer votre mot de passe" name="password" required />
+			<input type="password" placeholder="Entrer votre mot de passe" name="password" v-model="password" required />
 
 			<label><b>Nom</b></label>
-			<input type="text" placeholder="Entrer votre mot de passe" name="name" required />
+			<input type="text" placeholder="Entrer votre mot de passe" name="name" v-model="name" required />
 
 			<label><b>Image de profil</b></label>
-			<input type="file" placeholder="Télechargez votre image" name="imageUrl" required />
+			<input type="file" placeholder="Télechargez votre image" name="imageUrl" />
 
 			<label><b>Description de Profil</b></label>
-			<input type="text" placeholder="Entrer votre description" name="bio" />
+			<input type="text" placeholder="Entrer votre description" v-model="bio" name="bio" />
 
-			<input type="submit" id="submit" value="Valider" @add-user="addUser" />
+			<input type="submit" id="submit" value="Valider" />
 		</form>
 	</div>
 </template>
@@ -33,7 +33,29 @@ export default {
 			name: "",
 			imageUrl: "",
 			bio: "",
+			signupStatus: "",
 		};
+	},
+	methods: {
+		async onSubmit(e) {
+			e.preventDefault();
+			const newUser = {
+				email: this.email,
+				password: this.password,
+				name: this.name,
+				imageUrl: this.imageUrl,
+				bio: this.bio,
+			};
+			const res = await fetch("http://localhost:3000/users/signup", {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify(newUser),
+			});
+			const data = await res.json();
+			this.signupStatus = data;
+		},
 	},
 };
 </script>

@@ -17,17 +17,25 @@ exports.signup = (req, res, next) => {
 	bcrypt
 		.hash(req.body.password, 10)
 		.then((hash) => {
-			const userObject = JSON.parse(req.body.user);
 			const data = {
-				...userObject,
+				email: req.body.email,
 				password: hash,
-				imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+				name: req.body.name,
+				imageUrl: req.body.imageUrl,
+				bio: req.body.bio,
 			};
-			User.create()
+			let { email, password, name, imageUrl, bio } = data;
+			User.create({
+				email,
+				password,
+				name,
+				imageUrl,
+				bio,
+			})
 				.then(() => res.status(201).json({ message: "Utilisateur créé !" }))
 				.catch((error) => res.status(400).json({ error }));
 		})
-		.catch((error) => res.status(500).json({ error }));
+		// .catch((error) => res.status(500).json({ error }));
 };
 
 exports.login = (req, res, next) => {

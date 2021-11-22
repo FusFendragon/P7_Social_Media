@@ -1,5 +1,6 @@
 <template>
 	<div class="home">
+		<AddPost @add-post="addPost" />
 		<div class="posts">
 			<div v-for="post in posts" :key="post.id" class="post">
 				<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
@@ -8,7 +9,7 @@
 						<h2 v-if="user.id == post.authorId">{{ user.name }}</h2>
 					</div>
 				</router-link>
-				<DeleteButton />
+				<DeleteButton @click="deletePost(post.id)" />
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
@@ -23,11 +24,13 @@
 
 <script>
 import accounts from "@/accounts.js";
+import AddPost from "@/components/AddPost.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 export default {
 	name: "Home",
 	components: {
 		DeleteButton,
+		AddPost,
 	},
 	data() {
 		return {
@@ -36,6 +39,25 @@ export default {
 		};
 	},
 	methods: {
+		async addPost(post) {
+			const res = await fetch("http://localhost:3000/posts/add", {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify(post),
+			});
+			const data = await res.json();
+			this.posts = [...this.posts, data];
+		},
+		async deletePost(id) {
+			if (confirm("Voulez vous supprimer le message ?")) {
+				const res = await fetch(`http://localhost:3000/posts/${id}`, {
+					method: "DELETE",
+				});
+				res.status === 201 ? (this.posts = this.posts.filter((post) => post.id !== id)) : alert("Le message n'a pas été suprrimé suite à une erreur");
+			}
+		},
 		async fetchPosts() {
 			const res = await fetch("http://localhost:3000/posts");
 			const data = await res.json();

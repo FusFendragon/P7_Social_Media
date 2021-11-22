@@ -2,9 +2,10 @@ const Post = require("../models/post");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
+	console.log(req.body);
 	const data = {
-		authorId: 3,
-		message: "Maecenas vel porta lorem.",
+		authorId: 2,
+		message: req.body.message,
 	};
 	let { authorId, message } = data;
 
@@ -12,7 +13,9 @@ exports.createPost = (req, res, next) => {
 		authorId,
 		message,
 	})
-		.then(() => res.status(201).json({ message: "Post ajouté !" }))
+		.then((post) => {
+			res.status(200).json(post);
+		})
 		.catch((error) => res.status(400).json({ error }));
 };
 
