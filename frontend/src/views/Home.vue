@@ -40,12 +40,16 @@ export default {
 	},
 	methods: {
 		async addPost(post) {
+			const dataPost = {
+				message : post.message,
+				userId : sessionStorage.getItem(1),
+			}
 			const res = await fetch("http://localhost:3000/posts/add", {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
 				},
-				body: JSON.stringify(post),
+				body: JSON.stringify(dataPost),
 			});
 			const data = await res.json();
 			this.posts = [...this.posts, data];

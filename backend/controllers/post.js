@@ -2,9 +2,9 @@ const Post = require("../models/post");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
-	console.log(req.params.id);
+	console.log(req.body.userId);
 	const data = {
-		userId: 1,
+		userId: req.body.userId,
 		message: req.body.message,
 	};
 	let { userId, message } = data;
