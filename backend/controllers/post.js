@@ -51,7 +51,7 @@ exports.deletePost = (req, res, next) => {
 // GET ALL POSTS
 
 exports.getAllPosts = (req, res) =>
-	Post.findAll()
+	Post.findAll({ order: [["createdAt", "desc"]]})
 		.then((posts) => {
 			res.status(200).json(posts);
 		})
