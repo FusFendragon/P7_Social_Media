@@ -1,4 +1,6 @@
 const express = require("express");
+const User = require("./models/User");
+const Post = require("./models/post");
 
 // Database
 const db = require("./config/database");
@@ -30,3 +32,6 @@ app.use("/comments", require("./routes/comment"));
 module.exports = app;
 
 // hasmany belongto eager&leasy loading
+
+User.hasMany(Post);
+Post.belongsTo(User);

@@ -1,18 +1,50 @@
 <template>
 	<div id="login-form">
-		<form method="POST">
+		<form @submit="onSubmit">
 			<h2>Connexion</h2>
 
 			<label><b>Adresse e-mail</b></label>
-			<input type="text" placeholder="Entrer votre e-mail" name="username" required />
+			<input type="text" placeholder="Entrer votre e-mail" name="email" v-model="email" required />
 
 			<label><b>Mot de passe</b></label>
-			<input type="password" placeholder="Entrer votre mot de passe" name="password" required />
+			<input type="password" placeholder="Entrer votre mot de passe" name="password" v-model="password" />
 
 			<input type="submit" id="submit" value="LOGIN" />
 		</form>
 	</div>
 </template>
+
+<script>
+export default {
+	name: "login",
+	data() {
+		return {
+			email: "",
+			password: "",
+		};
+	},
+	methods: {
+		async onSubmit(e) {
+			e.preventDefault();
+			const infoLogin = {
+				email: this.email,
+				password: this.password,
+			};
+			const res = await fetch("http://localhost:3000/users/login", {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify(infoLogin),
+			});
+			const data = await res.json();
+			this.loginStatus = data;
+			sessionStorage.setItem(1, data.userId);
+			sessionStorage.setItem(2, data.token);
+		},
+	},
+};
+</script>
 
 <style scoped>
 #login-form {
