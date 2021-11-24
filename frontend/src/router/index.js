@@ -18,9 +18,9 @@ const routes = [
 		component: () => import(/* webpackChunkName: "MyProfil" */ "../views/MyProfil"),
 	},
 	{
-		path: "/Comment/:id",
-		name: "Comment",
-		component: () => import(/* webpackChunkName: "Comment" */ "../views/Comment"),
+		path: "/Post/:id",
+		name: "Post",
+		component: () => import(/* webpackChunkName: "Post" */ "../views/Post"),
 	},
 	{
 		path: "/Login",

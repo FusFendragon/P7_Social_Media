@@ -11,7 +11,7 @@
 				</router-link>
 				<DeleteButton @click="deletePost(post.id)" />
 				<span class="hr"></span>
-				<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
+				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
 					<div class="stats">
 						<span class="date">{{ post.createdAt }}</span>

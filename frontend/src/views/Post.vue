@@ -1,10 +1,10 @@
 <template>
 	<section>
-		<div v-for="post in posts" :key="post.id" class="post">
-			<router-link :to="{ name: 'Profil', params: { id: post.authorId } }" class="router-style">
-				<div v-for="user in users" :key="user.id" class="author">
-					<img v-if="user.id == post.authorId" :src="require(`@/assets/${user.image}`)" />
-					<h2 v-if="user.id == post.authorId">{{ user.name }}</h2>
+		<div class="post">
+			<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style">
+				<div v-for="user in users" :key="user.id" class="user">
+					<img v-if="user.id == post.userId" :src="require(`@/assets/${user.image}`)" />
+					<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
 				</div>
 			</router-link>
 			<p>{{ post.message }}</p>
@@ -26,12 +26,12 @@ export default {
 	data() {
 		return {
 			users: accounts.users,
-			posts: [],
+			post: [],
 			comments: [],
 		};
 	},
 	methods: {
-		async fetchPosts() {
+		async fetchPost() {
 			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`);
 			const data = await res.json();
 			return data;
@@ -43,7 +43,7 @@ export default {
 		},
 	},
 	async created() {
-		this.posts = await this.fetchPosts();
+		this.post = await this.fetchPost();
 		this.comments = await this.fetchComments();
 	},
 };
@@ -57,10 +57,10 @@ export default {
 	border-radius: 10px;
 	margin: 0 auto;
 }
-.author {
+.user {
 	display: flex;
 }
-.author img {
+.user img {
 	width: 30px;
 	height: 30px;
 	align-self: center;
