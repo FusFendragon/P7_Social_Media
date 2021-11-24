@@ -13,7 +13,7 @@
 			<input type="text" placeholder="Entrer votre mot de passe" name="name" v-model="name" required />
 
 			<label><b>Image de profil</b></label>
-			<input type="file" placeholder="Télechargez votre image" name="imageUrl" />
+			<input type="file" id="file" placeholder="Télechargez votre image" name="imageUrl" />
 
 			<label><b>Description de Profil</b></label>
 			<input type="text" placeholder="Entrer votre description" v-model="bio" name="bio" />
@@ -31,7 +31,6 @@ export default {
 			email: "",
 			password: "",
 			name: "",
-			imageUrl: "",
 			bio: "",
 			signupStatus: "",
 		};
@@ -43,17 +42,21 @@ export default {
 				email: this.email,
 				password: this.password,
 				name: this.name,
-				imageUrl: this.imageUrl,
 				bio: this.bio,
 			};
+			const files = document.querySelector('#file');
+			const formData = files.files[0];
+			// formData.append('imageUrl', files.files[0]);
+			console.log(formData);
 			const res = await fetch("http://localhost:3000/users/signup", {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
 				},
-				body: JSON.stringify(newUser),
+				body: (JSON.stringify(newUser),formData)
 			});
 			const data = await res.json();
+			console.log(data);
 			this.signupStatus = data;
 		},
 	},

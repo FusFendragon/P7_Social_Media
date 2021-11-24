@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
 				email: req.body.email,
 				password: hash,
 				name: req.body.name,
-				imageUrl: req.body.imageUrl,
+				imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 				bio: req.body.bio,
 			};
 			let { email, password, name, imageUrl, bio } = data;
