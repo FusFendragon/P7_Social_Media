@@ -5,7 +5,7 @@
 			<div v-for="post in posts" :key="post.id" class="post">
 				<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style">
 					<div v-for="user in users" :key="user.id" class="author">
-						<img v-if="user.id == post.userId" :src="require(`@/assets/${user.image}`)" />
+						<img v-if="user.id == post.userId" :src="`${user.imageUrl}`" />
 						<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
 					</div>
 				</router-link>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import accounts from "@/accounts.js";
 import AddPost from "@/components/AddPost.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 export default {
@@ -34,7 +33,7 @@ export default {
 	},
 	data() {
 		return {
-			users: accounts.users,
+			users: [],
 			posts: [],
 		};
 	},
@@ -63,9 +62,15 @@ export default {
 			const data = await res.json();
 			return data;
 		},
+		async fetchUsers() {
+			const res = await fetch("http://localhost:3000/users");
+			const data = await res.json();
+			return data;
+		},
 	},
 	async created() {
 		this.posts = await this.fetchPosts();
+		this.users = await this.fetchUsers();
 	},
 };
 </script>

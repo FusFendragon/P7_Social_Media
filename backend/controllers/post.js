@@ -24,7 +24,7 @@ exports.createPost = (req, res, next) => {
 exports.getOnePost = (req, res, next) => {
 	const postId = req.params.id;
 	console.log(postId);
-	Post.findAll({ where: { id: postId } })
+	Post.findOne({ where: { id: postId } })
 		.then((post) => {
 			res.status(200).json(post);
 		})

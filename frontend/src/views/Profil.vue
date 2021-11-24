@@ -1,13 +1,13 @@
 <template>
 	<section>
-		<div id="user-profil">
+		<!-- <div id="user-profil">
 			<div id="user-card">
 				<div>
 					<img :src="require(`@/assets/${user.image}`)" />
 					<h2>{{ user.name }}</h2>
 				</div>
 				<div id="user-info">
-					<p>{{ user.bio }}</p>
+					<p>{{ users.bio }}</p>
 				</div>
 			</div>
 			<div id="history-posts">
@@ -24,25 +24,29 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
+		<div>{{ user }}</div>
 	</section>
 </template>
 
 <script>
-import accounts from "@/accounts.js";
 import posts from "@/posts.js";
 export default {
 	data() {
 		return {
 			userId: this.$route.params.id,
 			posts: posts.posts,
+			user: {},
 		};
 	},
-	computed: {
-		user() {
-			return accounts.users.find((user) => {
-				return user.id == this.userId;
-			});
+	methods: {
+		async fetchUsers() {
+			const res = await fetch(`http://localhost:3000/users/${this.userId}`);
+			const data = await res.json();
+			return data;
+		},		
+		async created() {
+			this.user = await this.fetchUsers();
 		},
 	},
 };

@@ -6,6 +6,8 @@ const User = require("../models/User");
 require("dotenv").config();
 const tokenSecret = process.env.TOKEN_SECRET;
 
+// SIGNUP / ADD USER
+
 exports.signup = (req, res, next) => {
 	let passwordValidator = new RegExp("(?=.*[a-z])(?=.*[0-9])(?=.{8,})");
 	if (validator.validate(req.body.email) === false) {
@@ -38,6 +40,8 @@ exports.signup = (req, res, next) => {
 		.catch((error) => res.status(500).json({ error }));
 };
 
+// LOGIN / CHECK email and password
+
 exports.login = (req, res, next) => {
 	User.findOne({ where: { email: req.body.email } })
 		.then((user) => {
@@ -60,3 +64,32 @@ exports.login = (req, res, next) => {
 		})
 		.catch((error) => res.status(500).json({ error }));
 };
+
+// GET ONE USER
+
+exports.getOneUser = (req, res, next) => {
+	const userId = req.params.id;
+	console.log(req);
+	User.findOne({ where: { id: userId } })
+		.then((user) => {
+			res.status(200).json(user);
+		})
+		.catch((error) => {
+			res.status(404).json({
+				error: error,
+			});
+		});
+};
+
+// GET ALL USERS
+
+exports.getAllUsers = (req, res) =>
+	User.findAll()
+		.then((Users) => {
+			res.status(200).json(Users);
+		})
+		.catch((error) => {
+			res.status(400).json({
+				error: error,
+			});
+		});

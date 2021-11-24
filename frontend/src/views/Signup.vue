@@ -13,7 +13,7 @@
 			<input type="text" placeholder="Entrer votre mot de passe" name="name" v-model="name" required />
 
 			<label><b>Image de profil</b></label>
-			<input type="file" id="file" placeholder="Télechargez votre image" name="imageUrl" />
+			<input type="file" id="file" ref="file" v-on:change="handleFileUpload()" name="imageUrl" />
 
 			<label><b>Description de Profil</b></label>
 			<input type="text" placeholder="Entrer votre description" v-model="bio" name="bio" />
@@ -31,6 +31,7 @@ export default {
 			email: "",
 			password: "",
 			name: "",
+			file: "",
 			bio: "",
 			signupStatus: "",
 		};
@@ -38,26 +39,23 @@ export default {
 	methods: {
 		async onSubmit(e) {
 			e.preventDefault();
-			const newUser = {
-				email: this.email,
-				password: this.password,
-				name: this.name,
-				bio: this.bio,
-			};
-			const files = document.querySelector('#file');
-			const formData = files.files[0];
-			// formData.append('imageUrl', files.files[0]);
+			let formData = new FormData();
+			formData.append("image", this.file);
+			formData.append("email", this.email);
+			formData.append("password", this.password);
+			formData.append("name", this.name);
+			formData.append("bio", this.bio);
 			console.log(formData);
 			const res = await fetch("http://localhost:3000/users/signup", {
 				method: "POST",
-				headers: {
-					"Content-type": "application/json",
-				},
-				body: (JSON.stringify(newUser),formData)
+				body: formData,
 			});
 			const data = await res.json();
 			console.log(data);
 			this.signupStatus = data;
+		},
+		handleFileUpload() {
+			this.file = this.$refs.file.files[0];
 		},
 	},
 };
