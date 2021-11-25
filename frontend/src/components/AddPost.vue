@@ -2,8 +2,9 @@
 	<div class="add-post">
 		<form @submit="onSubmit" class="add-form">
 			<label class="label-form">Postez votre message :</label>
-			<input type="text" v-model="message" name="message" placeholder="Votre Post..." />
+			<input type="text" v-model="message" name="message" placeholder="Votre Post..." @input="countChars()" />
 			<input type="submit" value="✔" class="btn" />
+			{{ this.numberOfChars }}
 		</form>
 	</div>
 </template>
@@ -14,6 +15,7 @@ export default {
 	data() {
 		return {
 			message: "",
+			numberOfChars: "",
 		};
 	},
 	methods: {
@@ -29,6 +31,13 @@ export default {
 			this.$emit("add-post", newPost);
 			this.message = "";
 		},
+		 countChars() {
+			const data = this.message;
+			return data.length;
+		},
+	},
+	 created() {
+		this.numberOfChars =  this.countChars();
 	},
 };
 </script>
