@@ -1,20 +1,25 @@
 const Comment = require("../models/comment");
 
-// ADD COMMENTS
+// ADD POSTS
 exports.createComment = (req, res, next) => {
+	console.log(req.body.postId);
 	const data = {
-		authorId: 2,
-		postId: 9,
-		message: "Ceci est le commentaire du post.",
+		userId: req.body.userId,
+		message: req.body.message,
+		postId: req.body.postId,
 	};
-	let { authorId, postId, message } = data;
-
+	let { userId, message, postId } = data;
+	if (!userId) {
+		return res.status(401).json({ error: "Utilisateur non connecté" });
+	}
 	Comment.create({
-		authorId,
-		postId,
+		userId,
 		message,
+		postId,
 	})
-		.then(() => res.status(201).json({ message: "Commentaire ajouté !" }))
+		.then((comment) => {
+			res.status(200).json(comment);
+		})
 		.catch((error) => res.status(400).json({ error }));
 };
 
@@ -22,7 +27,7 @@ exports.createComment = (req, res, next) => {
 
 exports.getComments = (req, res, next) => {
 	const postId = req.params.id;
-	Comment.findAll({ where: { postId: postId } })
+	Comment.findAll({ where: { postId: postId }, order: [["createdAt", "desc"]] })
 		.then((comment) => {
 			res.status(200).json(comment);
 		})

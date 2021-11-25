@@ -1,9 +1,9 @@
 <template>
 	<div class="add-post">
 		<form @submit="onSubmit" class="add-form">
-			<label>Postez votre message</label>
-			<input type="text" v-model="message" name="message" placeholder="Votre Post" />
-			<input type="submit" value="Save Post" class="btn" />
+			<label class="label-form">Postez votre message :</label>
+			<input type="text" v-model="message" name="message" placeholder="Votre Post..." />
+			<input type="submit" value="✔" class="btn" />
 		</form>
 	</div>
 </template>
@@ -35,31 +35,25 @@ export default {
 
 <style scoped>
 .add-form {
-	margin-bottom: 40px;
-}
-.form-control {
-	margin: 20px 0;
-}
-.form-control label {
-	display: block;
-}
-.form-control input {
-	width: 100%;
-	height: 40px;
-	margin: 5px;
-	padding: 3px 7px;
-	font-size: 17px;
-}
-.form-control-check {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	flex-direction: column;
 }
-.form-control-check label {
-	flex: 1;
+.label-form {
+	text-align: left;
 }
-.form-control-check input {
-	flex: 2;
-	height: 20px;
+input[type="text"] {
+	height: 50px;
+	border-radius: 5px;
+}
+input[type="submit"] {
+	width: 25px;
+	border-radius: 25px;
+	margin-left: 95%;
+	background-color: rgb(68, 68, 219);
+	border: 1px solid transparent;
+	color: white;
+}
+input[type="submit"]:hover {
+	background-color: rgb(31, 31, 131);
 }
 </style>

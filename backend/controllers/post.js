@@ -8,7 +8,9 @@ exports.createPost = (req, res, next) => {
 		message: req.body.message,
 	};
 	let { userId, message } = data;
-
+	if (!userId) {
+		return res.status(401).json({ error: "Utilisateur non connecté" });
+	}
 	Post.create({
 		userId,
 		message,

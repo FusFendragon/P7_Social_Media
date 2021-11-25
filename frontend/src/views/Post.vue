@@ -11,9 +11,17 @@
 			<div class="stats">
 				<span class="date">{{ post.createdAt }}</span>
 			</div>
+			<AddPost @add-post="addPost" />
 			<div v-for="comment in comments" :key="comment.id" class="comments">
+				<div class="user">
+					<img v-if="user.id == comment.userId" :src="user.imageUrl" />
+					<h2 v-if="user.id == comment.userId">{{ user.name }}</h2>
+				</div>
 				<div>
 					{{ comment.message }}
+				</div>
+				<div class="stats">
+					<span class="date">{{ post.createdAt }}</span>
 				</div>
 			</div>
 		</div>
@@ -21,7 +29,12 @@
 </template>
 
 <script>
+import AddPost from "@/components/AddPost.vue";
 export default {
+	name: "Post",
+	components: {
+		AddPost,
+	},
 	data() {
 		return {
 			user: [],
@@ -34,6 +47,18 @@ export default {
 			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`);
 			const data = await res.json();
 			return data;
+		},
+		async addPost(comment) {
+			let postId = this.post.id;
+			const res = await fetch("http://localhost:3000/comments/add", {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify({ message: comment.message, userId: localStorage.getItem("userId"), postId: postId }),
+			});
+			const data = await res.json();
+			this.comments = [data, ...this.comments];
 		},
 		async fetchComments() {
 			const res = await fetch(`http://localhost:3000/comments/${this.$route.params.id}`);

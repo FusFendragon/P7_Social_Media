@@ -39,5 +39,7 @@ module.exports = app;
 
 // hasmany belongto eager&leasy loading
 
-User.hasMany(Post);
+User.hasMany(Post, {
+	onDelete: 'CASCADE'
+});
 Post.belongsTo(User);
