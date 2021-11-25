@@ -13,6 +13,7 @@
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
+					<img :src="`${post.imageUrl}`" alt="L'image du post n'est pas chargé" class="post-image">
 					<div class="stats">
 						<span class="date">{{ post.createdAt }}</span>
 					</div>
@@ -38,13 +39,10 @@ export default {
 		};
 	},
 	methods: {
-		async addPost(post) {
+		async addPost(formData) {
 			const res = await fetch("http://localhost:3000/posts/add", {
 				method: "POST",
-				headers: {
-					"Content-type": "application/json",
-				},
-				body: JSON.stringify({ message: post.message, userId: localStorage.getItem('userId') }),
+				body: formData,
 			});
 			const data = await res.json();
 			this.posts = [data, ...this.posts];
@@ -133,9 +131,9 @@ export default {
 	display: flex;
 	justify-content: space-between;
 }
-.like {
-	align-self: center;
-	margin: 10px 10px 5px 10px;
+.post-image {
+	width: 300px;
+	object-fit: cover;
 }
 .date {
 	align-self: center;

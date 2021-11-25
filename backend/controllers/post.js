@@ -2,18 +2,19 @@ const Post = require("../models/post");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
-	console.log(req.body.userId);
 	const data = {
 		userId: req.body.userId,
 		message: req.body.message,
+		imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 	};
-	let { userId, message } = data;
+	let { userId, message, imageUrl } = data;
 	if (!userId) {
 		return res.status(401).json({ error: "Utilisateur non connecté" });
 	}
 	Post.create({
 		userId,
 		message,
+		imageUrl,
 	})
 		.then((post) => {
 			res.status(200).json(post);

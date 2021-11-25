@@ -1,7 +1,11 @@
 const express = require("express");
+const path = require('path');
+
+
+// MODELS
 const User = require("./models/User");
 const Post = require("./models/post");
-const path = require('path');
+const Comment = require("./models/comment");
 
 // Database
 const db = require("./config/database");
@@ -43,3 +47,13 @@ User.hasMany(Post, {
 	onDelete: 'CASCADE'
 });
 Post.belongsTo(User);
+
+Post.hasMany(Comment, {
+	onDelete: 'CASCADE'
+});
+Comment.belongsTo(Post);
+
+User.hasMany(Comment, {
+	onDelete: 'CASCADE'
+});
+Comment.belongsTo(User);

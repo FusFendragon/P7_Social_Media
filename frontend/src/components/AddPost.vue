@@ -3,8 +3,11 @@
 		<form @submit="onSubmit" class="add-form">
 			<label class="label-form">Postez votre message :</label>
 			<input type="text" v-model="message" name="message" placeholder="Votre Post..." @input="countChars()" />
-			<input type="submit" value="✔" class="btn" />
-			{{ this.numberOfChars }}
+			<div id="btn-input">
+				<input type="file" id="file" ref="file" v-on:change="handleFileUpload()" name="imageUrl" />
+				<span>{{ numberOfChars }}/350</span>
+				<input type="submit" value="✔" class="btn" />
+			</div>
 		</form>
 	</div>
 </template>
@@ -15,34 +18,46 @@ export default {
 	data() {
 		return {
 			message: "",
-			numberOfChars: "",
+			file: "",
 		};
 	},
 	methods: {
 		onSubmit(e) {
 			e.preventDefault();
 			if (!this.message) {
-				alert("Please add a Post");
+				alert("Veuillez Poster un message non vide");
 				return;
 			}
-			const newPost = {
-				message: this.message,
-			};
-			this.$emit("add-post", newPost);
+			if (this.message.length > 350) {
+				alert("Veuillez ecrire un message ne dépassant pas 350 caratères");
+				return;
+			}
+			let formData = new FormData();
+			formData.append("image", this.file);
+			formData.append("message", this.message);
+			formData.append("userId", localStorage.getItem("userId"));
+			this.$emit("add-post", formData);
 			this.message = "";
 		},
-		 countChars() {
+		handleFileUpload() {
+			this.file = this.$refs.file.files[0];
+		},
+		countChars() {
 			const data = this.message;
 			return data.length;
 		},
 	},
-	 created() {
-		this.numberOfChars =  this.countChars();
+	created() {
+		this.numberOfChars = this.countChars();
 	},
 };
 </script>
 
 <style scoped>
+.add-post {
+	max-width: 550px;
+	margin: 0 auto;
+}
 .add-form {
 	display: flex;
 	flex-direction: column;
@@ -53,11 +68,16 @@ export default {
 input[type="text"] {
 	height: 50px;
 	border-radius: 5px;
+	word-wrap: break-word;
+	overflow: auto;
+}
+#btn-input {
+	display: flex;
+	justify-content: space-between;
 }
 input[type="submit"] {
 	width: 25px;
 	border-radius: 25px;
-	margin-left: 95%;
 	background-color: rgb(68, 68, 219);
 	border: 1px solid transparent;
 	color: white;
