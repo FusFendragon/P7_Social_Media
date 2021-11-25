@@ -23,7 +23,6 @@ exports.createPost = (req, res, next) => {
 
 exports.getOnePost = (req, res, next) => {
 	const postId = req.params.id;
-	console.log(postId);
 	Post.findOne({ where: { id: postId } })
 		.then((post) => {
 			res.status(200).json(post);
@@ -51,7 +50,7 @@ exports.deletePost = (req, res, next) => {
 // GET ALL POSTS
 
 exports.getAllPosts = (req, res) =>
-	Post.findAll({ order: [["createdAt", "desc"]]})
+	Post.findAll({ order: [["createdAt", "desc"]] })
 		.then((posts) => {
 			res.status(200).json(posts);
 		})
@@ -60,3 +59,18 @@ exports.getAllPosts = (req, res) =>
 				error: error,
 			});
 		});
+
+// GET ALL POSTS FROM 1 USER
+
+exports.getAllPostsFromUser = (req, res) => {
+	const userId = req.params.id;
+	Post.findAll({ order: [["createdAt", "desc"]], where: { userId: userId } })
+		.then((posts) => {
+			res.status(200).json(posts);
+		})
+		.catch((error) => {
+			res.status(400).json({
+				error: error,
+			});
+		});
+};

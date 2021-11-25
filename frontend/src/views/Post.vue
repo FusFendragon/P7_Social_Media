@@ -2,8 +2,8 @@
 	<section>
 		<div class="post">
 			<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style">
-				<div v-for="user in users" :key="user.id" class="user">
-					<img v-if="user.id == post.userId" :src="require(`@/assets/${user.image}`)" />
+				<div class="user">
+					<img v-if="user.id == post.userId" :src="user.imageUrl" />
 					<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
 				</div>
 			</router-link>
@@ -21,11 +21,10 @@
 </template>
 
 <script>
-import accounts from "@/accounts.js";
 export default {
 	data() {
 		return {
-			users: accounts.users,
+			user: [],
 			post: [],
 			comments: [],
 		};
@@ -41,10 +40,16 @@ export default {
 			const data = await res.json();
 			return data;
 		},
+		async fetchUser() {
+			const res = await fetch(`http://localhost:3000/users/${this.post.userId}`);
+			const data = await res.json();
+			return data;
+		},
 	},
 	async created() {
 		this.post = await this.fetchPost();
 		this.comments = await this.fetchComments();
+		this.user = await this.fetchUser();
 	},
 };
 </script>

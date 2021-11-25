@@ -1,53 +1,56 @@
 <template>
 	<section>
-		<!-- <div id="user-profil">
+		<div id="user-profil">
 			<div id="user-card">
 				<div>
-					<img :src="require(`@/assets/${user.image}`)" />
+					<img :src="user.imageUrl" />
 					<h2>{{ user.name }}</h2>
 				</div>
 				<div id="user-info">
-					<p>{{ users.bio }}</p>
+					<p>{{ user.bio }}</p>
 				</div>
 			</div>
 			<div id="history-posts">
 				<h3>Posts</h3>
 				<div class="hr"></div>
-				<div v-for="post in posts" :key="post.id">
-					<div v-if="user.id == post.authorId">
-						<router-link :to="{ name: 'Comment', params: { id: post.id } }" class="router-style">
+				<div>
+					<div v-for="post in posts" :key="post.id">
+						<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
 							<h4>
-								<span class="date">{{ post.date }}:</span><br />
+								<span class="date">{{ post.createdAt }}:</span><br />
 								{{ post.message }}
 							</h4>
 						</router-link>
 					</div>
 				</div>
 			</div>
-		</div> -->
-		<div>{{ user }}</div>
+		</div>
 	</section>
 </template>
 
 <script>
-import posts from "@/posts.js";
 export default {
 	data() {
 		return {
-			userId: this.$route.params.id,
-			posts: posts.posts,
-			user: {},
+			posts: [],
+			user: [],
 		};
 	},
 	methods: {
-		async fetchUsers() {
-			const res = await fetch(`http://localhost:3000/users/${this.userId}`);
+		async fetchPostsUser() {
+			const res = await fetch(`http://localhost:3000/posts/user/${this.$route.params.id}`);
 			const data = await res.json();
 			return data;
-		},		
-		async created() {
-			this.user = await this.fetchUsers();
 		},
+		async fetchUser() {
+			const res = await fetch(`http://localhost:3000/users/${this.$route.params.id}`);
+			const data = await res.json();
+			return data;
+		},
+	},
+	async created() {
+		this.user = await this.fetchUser();
+		this.posts = await this.fetchPostsUser();
 	},
 };
 </script>

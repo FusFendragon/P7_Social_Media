@@ -22,7 +22,6 @@ exports.createComment = (req, res, next) => {
 
 exports.getComments = (req, res, next) => {
 	const postId = req.params.id;
-	console.log(postId);
 	Comment.findAll({ where: { postId: postId } })
 		.then((comment) => {
 			res.status(200).json(comment);

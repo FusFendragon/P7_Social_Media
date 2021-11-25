@@ -69,7 +69,7 @@ exports.login = (req, res, next) => {
 
 exports.getOneUser = (req, res, next) => {
 	const userId = req.params.id;
-	console.log(req);
+	console.log(userId);
 	User.findOne({ where: { id: userId } })
 		.then((user) => {
 			res.status(200).json(user);

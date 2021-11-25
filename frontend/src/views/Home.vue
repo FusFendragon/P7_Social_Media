@@ -44,7 +44,7 @@ export default {
 				headers: {
 					"Content-type": "application/json",
 				},
-				body: JSON.stringify({ message: post.message, userId: sessionStorage.getItem(1) }),
+				body: JSON.stringify({ message: post.message, userId: localStorage.getItem('userId') }),
 			});
 			const data = await res.json();
 			this.posts = [data, ...this.posts];

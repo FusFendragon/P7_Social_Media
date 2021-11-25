@@ -39,8 +39,9 @@ export default {
 			});
 			const data = await res.json();
 			this.loginStatus = data;
-			sessionStorage.setItem(1, data.userId);
-			sessionStorage.setItem(2, data.token);
+			console.log(data);
+			localStorage.setItem("userId", data.userId);
+			localStorage.setItem("token", data.token);
 		},
 	},
 };

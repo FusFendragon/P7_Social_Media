@@ -30,7 +30,7 @@ app.use(express.json());
 
 // Post routes
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, 'images')));
 app.use("/users", require("./routes/user"));
 app.use("/posts", require("./routes/post"));
 app.use("/comments", require("./routes/comment"));
