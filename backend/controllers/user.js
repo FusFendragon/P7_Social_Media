@@ -20,11 +20,12 @@ exports.signup = (req, res, next) => {
 	bcrypt
 		.hash(req.body.password, 10)
 		.then((hash) => {
+			const imageOrNot = req.file ? (`${req.protocol}://${req.get("host")}/images/${req.file.filename}`) : (`${req.protocol}://${req.get("host")}/images/defaultAvatar.jpg`);
 			const data = {
 				email: req.body.email,
 				password: hash,
 				name: req.body.name,
-				imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+				imageUrl: imageOrNot,
 				bio: req.body.bio,
 			};
 			let { email, password, name, imageUrl, bio } = data;
@@ -68,7 +69,7 @@ exports.login = (req, res, next) => {
 
 exports.modifyUser = (req, res, next) => {
 	let userObject;
-	console.log(req.params.id);
+	console.log(req.body);
 	function userUpdate() {
 		User.update({ ...userObject, id: req.params.id }, { where: {id: req.params.id} })
 			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))

@@ -51,8 +51,7 @@ export default {
 				body: formData,
 			});
 			const data = await res.json();
-			console.log(data);
-			this.signupStatus = data;
+			this.signupStatus = data.message;
 		},
 		handleFileUpload() {
 			this.file = this.$refs.file.files[0];

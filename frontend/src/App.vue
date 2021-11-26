@@ -14,6 +14,9 @@ export default {
 	},
 	computed: {
 		checkAuth() {
+
+			// NAVIGUATION GUARD VUE JS
+
 			// window.open("/login", "_self");
 			console.log("test");
 			return "test";

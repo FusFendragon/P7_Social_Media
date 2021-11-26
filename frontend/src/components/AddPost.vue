@@ -19,11 +19,13 @@ export default {
 		return {
 			message: "",
 			file: "",
+			numberOfChars: 0,
 		};
 	},
 	methods: {
 		onSubmit(e) {
 			e.preventDefault();
+			this.numberOfChars = 0;
 			if (!this.message) {
 				alert("Veuillez Poster un message non vide");
 				return;
@@ -43,12 +45,8 @@ export default {
 			this.file = this.$refs.file.files[0];
 		},
 		countChars() {
-			const data = this.message;
-			return data.length;
+			this.numberOfChars = this.message.length;
 		},
-	},
-	created() {
-		this.numberOfChars = this.countChars();
 	},
 };
 </script>

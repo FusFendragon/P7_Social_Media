@@ -13,7 +13,7 @@
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
-					<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image">
+					<img :src="`${post.imageUrl}`" v-if="post.imageUrl" class="post-image">
 					<div class="stats">
 						<span class="date">{{ post.createdAt }}</span>
 					</div>
@@ -42,6 +42,7 @@ export default {
 		async addPost(formData) {
 			const res = await fetch("http://localhost:3000/posts/add", {
 				method: "POST",
+				// headers: {authorization : "Bearer" + token},
 				body: formData,
 			});
 			const data = await res.json();

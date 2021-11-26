@@ -9,7 +9,7 @@
 					<router-link to="/"> Accueil </router-link>
 				</li>
 				<li class="links">
-					<router-link to="/Profil"  > Mon compte </router-link>
+					<router-link :to="{ name:'Profil', params: {id: userId}}"> Mon compte </router-link>
 				</li>
 			</ul>
 		</nav>
@@ -17,6 +17,18 @@
 </template>
 
 <script>
+export default {
+	name: "TheNaviguation",
+	data() {
+		return {
+		userId: "",
+		}	
+	},
+	created(){
+		this.userId = localStorage.getItem("userId")
+	}
+}
+
 </script>
 
 <style scoped>
