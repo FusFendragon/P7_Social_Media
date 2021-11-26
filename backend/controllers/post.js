@@ -2,10 +2,11 @@ const Post = require("../models/post");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
+	const imageOrNot = req.file ? (`${req.protocol}://${req.get("host")}/images/${req.file.filename}`) : null;
 	const data = {
 		userId: req.body.userId,
 		message: req.body.message,
-		imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+		imageUrl: imageOrNot
 	};
 	let { userId, message, imageUrl } = data;
 	if (!userId) {

@@ -8,6 +8,7 @@
 				</div>
 			</router-link>
 			<p>{{ post.message }}</p>
+			<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image" />
 			<div class="stats">
 				<span class="date">{{ post.createdAt }}</span>
 			</div>
@@ -115,6 +116,11 @@ export default {
 .post p {
 	text-align: justify;
 	margin: 0px 10px;
+}
+.post-image {
+	width: 300px;
+	object-fit: cover;
+	align-self: center;
 }
 .stats {
 	display: flex;

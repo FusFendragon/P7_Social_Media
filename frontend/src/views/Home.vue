@@ -13,7 +13,7 @@
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
 					<p>{{ post.message }}</p>
-					<img :src="`${post.imageUrl}`" alt="L'image du post n'est pas chargé" class="post-image">
+					<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image">
 					<div class="stats">
 						<span class="date">{{ post.createdAt }}</span>
 					</div>

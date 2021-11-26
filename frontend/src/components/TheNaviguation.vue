@@ -9,14 +9,15 @@
 					<router-link to="/"> Accueil </router-link>
 				</li>
 				<li class="links">
-					<router-link to="/MyProfil"> Mon compte </router-link>
+					<router-link to="/Profil"  > Mon compte </router-link>
 				</li>
 			</ul>
 		</nav>
 	</header>
 </template>
 
-<script></script>
+<script>
+</script>
 
 <style scoped>
 header {
