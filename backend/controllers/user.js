@@ -5,7 +5,7 @@ const User = require("../models/User");
 const fs = require("fs");
 
 require("dotenv").config();
-const tokenSecret = process.env.TOKEN_SECRET;
+const tokenSecret = "SECRET_TOKEN";
 
 // SIGNUP / ADD USER
 
@@ -59,7 +59,7 @@ exports.login = (req, res, next) => {
 					console.log(user.id);
 					res.status(200).json({
 						userId: user.id,
-						token: jwt.sign({ userId: user._id }, "SECRET_TOKEN", { expiresIn: "24h" }),
+						token: jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: "24h" }),
 					});
 				})
 				.catch((error) => res.status(500).json({ error }));

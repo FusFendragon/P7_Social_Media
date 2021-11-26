@@ -40,9 +40,10 @@ export default {
 	},
 	methods: {
 		async addPost(formData) {
+			const token = localStorage.getItem("token");
 			const res = await fetch("http://localhost:3000/posts/add", {
 				method: "POST",
-				// headers: {authorization : "Bearer" + token},
+				headers: {authorization : "Bearer " + token},
 				body: formData,
 			});
 			const data = await res.json();
@@ -53,7 +54,8 @@ export default {
 				const res = await fetch(`http://localhost:3000/posts/${id}`, {
 					method: "DELETE",
 				});
-				res.status === 201 ? (this.posts = this.posts.filter((post) => post.id !== id)) : alert("Le message n'a pas été suprrimé suite à une erreur");
+				const data = await res.json();
+				res.status === 201 ? (this.posts = this.posts.filter((post) => post.id !== id)) : alert(data.message);
 			}
 		},
 		async fetchPosts() {

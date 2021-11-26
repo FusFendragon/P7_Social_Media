@@ -4,3 +4,7 @@ method: "PUT"
 {
     "email": "fus@outlook.fr"
 }
+
+###
+
+POST http://localhost:3000/posts/add
