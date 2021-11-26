@@ -17,6 +17,10 @@ const User = db.define("user", {
 	bio: {
 		type: Sequelize.STRING(350),
 	},
+	administrator: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false,
+	}
 });
 
 module.exports = User;

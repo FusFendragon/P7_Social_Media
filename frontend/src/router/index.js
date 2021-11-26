@@ -39,4 +39,17 @@ const router = createRouter({
 	routes,
 });
 
+// async function isAuthenticatedOrNot() {
+// 	const res = await fetch("http://localhost:3000/posts");
+// 	const isAuthenticated = res.json();
+// 	return isAuthenticated;
+// }
+
+// router.beforeEach((to, from, next) => {
+// 	let isAuthenticated = isAuthenticatedOrNot();
+// 	console.log(isAuthenticated);
+// 	if (to.name !== "Login" && !isAuthenticated) next({ name: "Login" });
+// 	else next();
+// });
+
 export default router;

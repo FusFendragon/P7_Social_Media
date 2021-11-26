@@ -105,7 +105,7 @@ exports.deleteUser = (req, res, next) => {
 			id: userId,
 		},
 	})
-		.then(() => res.status(201).json({ message: "Utilisateursupprimé !" }))
+		.then(() => res.status(201).json({ message: "Utilisateur supprimé !" }))
 		.catch((error) => res.status(400).json({ error }));
 };
 
@@ -138,3 +138,9 @@ exports.getAllUsers = (req, res) =>
 				error: error,
 			});
 		});
+
+// SEND STATUS CONNECTED 
+
+exports.isConnected = (req, res) =>
+res.status(201).json({ message: "Utilisateur créé !" })
+ 
