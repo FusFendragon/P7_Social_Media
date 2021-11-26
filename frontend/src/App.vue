@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<TheNavigation />
+		<TheNavigation @check-auth="checkAuth" />
 		<router-view :key="$route.path" />
 	</div>
 </template>
@@ -11,6 +11,13 @@ import TheNavigation from "@/components/TheNaviguation";
 export default {
 	components: {
 		TheNavigation,
+	},
+	computed: {
+		checkAuth() {
+			// window.open("/login", "_self");
+			console.log("test");
+			return "test";
+		},
 	},
 };
 </script>

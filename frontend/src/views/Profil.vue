@@ -10,18 +10,24 @@
 					<p>{{ user.bio }}</p>
 				</div>
 			</div>
-			<div id="history-posts">
-				<h3>Posts</h3>
-				<div class="hr"></div>
-				<div>
-					<div v-for="post in posts" :key="post.id">
-						<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
-							<h4>
-								<span class="date">{{ post.createdAt }}:</span><br />
-								{{ post.message }}
-							</h4>
-						</router-link>
+			<div id="bottom-block">
+				<div id="history-posts">
+					<h3>Posts</h3>
+					<div class="hr"></div>
+					<div>
+						<div v-for="post in posts" :key="post.id">
+							<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
+								<h4>
+									<span class="date">{{ post.createdAt }}:</span><br />
+									{{ post.message }}
+								</h4>
+							</router-link>
+						</div>
 					</div>
+				</div>
+				<div>
+					<router-link :to="{ name: 'ModifyUser', params: { id: user.id } }" class="router-style">Modifier le compte</router-link>
+					<router-link :to="{}" class="router-style" @Click="deleteUser(`${this.$route.params.id}`)" >Supprimer le compte</router-link>
 				</div>
 			</div>
 		</div>
@@ -46,6 +52,14 @@ export default {
 			const res = await fetch(`http://localhost:3000/users/${this.$route.params.id}`);
 			const data = await res.json();
 			return data;
+		},
+		async deleteUser(id) {
+			if (confirm("Êtes-vous sûr de supprimer le compte ainsi que tous ses postes ?")) {
+				const res = await fetch(`http://localhost:3000/users/${id}`, {
+					method: "DELETE",
+				});
+				res.status === 201 ? (window.open("/", "_self")) : alert("L'utilisateur' n'a pas été suprrimé suite à une erreur");
+			}
 		},
 	},
 	async created() {
@@ -87,8 +101,12 @@ section {
 #user-info p {
 	text-align: justify;
 }
+#bottom-block {
+	display: flex;
+	flex-direction: row;
+}
 #history-posts {
-	max-width: 40%;
+	width: 60%;
 	padding: 15px;
 	border-right: 2px solid #f9e4c8;
 }

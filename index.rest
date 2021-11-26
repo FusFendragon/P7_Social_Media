@@ -1,1 +1,6 @@
-GET http://localhost:3000/users/1
+PUT http://localhost:3000/users/modify/1
+method: "PUT"
+
+{
+    "email": "fus@outlook.fr"
+}

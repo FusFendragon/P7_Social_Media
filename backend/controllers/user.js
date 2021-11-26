@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var validator = require("email-validator");
 const User = require("../models/User");
+const fs = require("fs");
 
 require("dotenv").config();
 const tokenSecret = process.env.TOKEN_SECRET;
@@ -64,6 +65,49 @@ exports.login = (req, res, next) => {
 		})
 		.catch((error) => res.status(500).json({ error }));
 };
+
+exports.modifyUser = (req, res, next) => {
+	let userObject;
+	console.log(req.params.id);
+	function userUpdate() {
+		User.update({ ...userObject, id: req.params.id }, { where: {id: req.params.id} })
+			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
+			.catch((error) => res.status(400).json({ error }));
+	}
+	if (req.file) {
+		User.findOne({ _id: req.params.id })
+			.then((user) => {
+				const filename = user.imageUrl.split("/images/")[1];
+				console.log(filename);
+				fs.unlink(`images/${filename}`, () => {});
+
+				userObject = {
+					...JSON.parse(req.body.user),
+					imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+				};
+				userUpdate();
+			})
+			.catch((error) => res.status(500).json({ error }));
+	} else {
+
+		userObject = { ...req.body };
+		userUpdate();
+	}
+};
+
+// DELETE USER
+
+exports.deleteUser = (req, res, next) => {
+	const userId = req.params.id;
+	User.destroy({
+		where: {
+			id: userId,
+		},
+	})
+		.then(() => res.status(201).json({ message: "Utilisateursupprimé !" }))
+		.catch((error) => res.status(400).json({ error }));
+};
+
 
 // GET ONE USER
 
