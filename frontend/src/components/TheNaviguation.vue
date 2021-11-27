@@ -9,7 +9,7 @@
           <router-link to="/"> Accueil </router-link>
         </li>
         <li class="links">
-          <router-link :to="{ name: 'Profil', params: { id: userId } }">
+          <router-link :to="{ name: 'Profil', params: { id: userId } }" v-if="userId">
             Mon compte
           </router-link>
         </li>

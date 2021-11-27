@@ -83,12 +83,12 @@ exports.modifyUser = (req, res, next) => {
 				fs.unlink(`images/${filename}`, () => {});
 
 				userObject = {
-					...JSON.parse(req.body.user),
+					...req.body,
 					imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 				};
 				userUpdate();
 			})
-			.catch((error) => res.status(500).json({ error }));
+			// .catch((error) => res.status(500).json({ error }));
 	} else {
 
 		userObject = { ...req.body };
