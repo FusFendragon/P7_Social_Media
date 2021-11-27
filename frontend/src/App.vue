@@ -23,4 +23,11 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+.router-style {
+	text-decoration: none;
+	color: rgb(45, 125, 255);
+}
+.router-style:hover {
+	text-decoration: underline;
+}
 </style>

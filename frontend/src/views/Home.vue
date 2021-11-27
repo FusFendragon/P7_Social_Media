@@ -3,15 +3,16 @@
 		<AddPost @add-post="addPost" />
 		<div class="posts">
 			<div v-for="post in posts" :key="post.id" class="post">
-				<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style" v-if="post.userId">
+				<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style router-profil" v-if="post.userId">
 					<div v-for="user in users" :key="user.id" class="author">
 						<img v-if="user.id == post.userId" :src="`${user.imageUrl}`" />
 						<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
+						<DeleteButton @click="deletePost(post.id)" v-if="user.administrator === 1 || post.userId == userId" />
 					</div>
 				</router-link>
-				<DeleteButton @click="deletePost(post.id)" />
+
 				<span class="hr"></span>
-				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style">
+				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style router-profil">
 					<p>{{ post.message }}</p>
 					<img :src="`${post.imageUrl}`" v-if="post.imageUrl" class="post-image" />
 					<div class="stats">
@@ -74,6 +75,7 @@ export default {
 	async created() {
 		this.posts = await this.fetchPosts();
 		this.users = await this.fetchUsers();
+		this.userId = localStorage.getItem("userId");
 	},
 };
 </script>
@@ -146,5 +148,8 @@ export default {
 .router-style {
 	text-decoration: none;
 	color: black;
+}
+.router-profil {
+	width: 60%;
 }
 </style>

@@ -49,6 +49,7 @@
 
       <input type="submit" id="submit" value="Valider" />
     </form>
+        <h3>Vous avez deja un compte ? <router-link to="/login">Cliquez ici</router-link></h3>
   </div>
 </template>
 
@@ -132,4 +133,5 @@ input[type="submit"]:hover {
   background-color: #fbb656;
   border: 1px solid #fbb656;
 }
+
 </style>

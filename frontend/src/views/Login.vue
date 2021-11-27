@@ -1,7 +1,7 @@
 <template>
   <div id="login-form">
     <form @submit="onSubmit">
-      <h2>Connexion</h2>
+      <h2>Veuillez-vous connecter</h2>
 
       <label><b>Adresse e-mail</b></label>
       <input
@@ -22,6 +22,7 @@
 
       <input type="submit" id="submit" value="LOGIN" />
     </form>
+    <h3>Vous n'avez pas de compte ? <router-link to="/Signup" class="router-style">Cliquez ici</router-link></h3>
   </div>
 </template>
 
@@ -52,6 +53,7 @@ export default {
       this.loginStatus = data;
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("token", data.token);
+      this.$router.push("/")
     },
   },
 };
@@ -71,7 +73,7 @@ form {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 #login-form h2 {
-  width: 38%;
+  width: 40%;
   margin: 0 auto;
   padding-bottom: 10px;
 }
@@ -102,4 +104,5 @@ input[type="submit"]:hover {
   background-color: #fbb656;
   border: 1px solid #fbb656;
 }
+
 </style>
