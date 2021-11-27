@@ -59,7 +59,7 @@ exports.login = (req, res, next) => {
 					console.log(user.id);
 					res.status(200).json({
 						userId: user.id,
-						token: jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: "24h" }),
+						token: jwt.sign({ userId: user.id }, tokenSecret, { expiresIn: "24h" }),
 					});
 				})
 				.catch((error) => res.status(500).json({ error }));
@@ -139,8 +139,3 @@ exports.getAllUsers = (req, res) =>
 			});
 		});
 
-// SEND STATUS CONNECTED 
-
-exports.isConnected = (req, res) =>
-res.status(201).json({ message: "Utilisateur créé !" })
- 

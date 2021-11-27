@@ -47,7 +47,7 @@ function isAuthenticatedOrNot() {
 router.beforeEach((to, from, next) => {
   const isAuthenticated = isAuthenticatedOrNot();
   console.log(isAuthenticated);
-	if (to.name !== "Login" && !isAuthenticated) next({ name: "Login" });
+	if (to.name !== "Login" && to.name !== "Signup" && !isAuthenticated) next({ name: "Login" });
 	else next();
 });
 
