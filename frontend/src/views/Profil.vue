@@ -66,9 +66,13 @@ export default {
 				}
 			}
 		},
-    changeAdministratorStatue() {
-      this.user.administrator = !this.user.administrator
-    }
+		changeAdministratorStatue(id) {
+			fetch(`http://localhost:3000/users/admin/${id}`, {
+				method: "PUT",
+				body: this.user,
+			}),
+				(this.user.administrator = !this.user.administrator);
+		},
 	},
 	async created() {
 		this.user = await this.fetchUser();

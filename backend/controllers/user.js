@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
 	bcrypt
 		.hash(req.body.password, 10)
 		.then((hash) => {
-			const imageOrNot = req.file ? (`${req.protocol}://${req.get("host")}/images/${req.file.filename}`) : (`${req.protocol}://${req.get("host")}/images/defaultAvatar.jpg`);
+			const imageOrNot = req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : `${req.protocol}://${req.get("host")}/images/defaultAvatar.jpg`;
 			const data = {
 				email: req.body.email,
 				password: hash,
@@ -71,12 +71,12 @@ exports.modifyUser = (req, res, next) => {
 	let userObject;
 	console.log(req.body);
 	function userUpdate() {
-		User.update({ ...userObject, id: req.params.id }, { where: {id: req.params.id} })
+		User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
 			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
 			.catch((error) => res.status(400).json({ error }));
 	}
 	if (req.file) {
-		User.findOne({ _id: req.params.id })
+		User.findOne({ id: req.params.id })
 			.then((user) => {
 				const filename = user.imageUrl.split("/images/")[1];
 				console.log(filename);
@@ -88,9 +88,8 @@ exports.modifyUser = (req, res, next) => {
 				};
 				userUpdate();
 			})
-			// .catch((error) => res.status(500).json({ error }));
+			.catch((error) => res.status(500).json({ error }));
 	} else {
-
 		userObject = { ...req.body };
 		userUpdate();
 	}
@@ -109,7 +108,6 @@ exports.deleteUser = (req, res, next) => {
 		.catch((error) => res.status(400).json({ error }));
 };
 
-
 // GET ONE USER
 
 exports.getOneUser = (req, res, next) => {
@@ -126,8 +124,6 @@ exports.getOneUser = (req, res, next) => {
 		});
 };
 
-// GET ALL USERS
-
 exports.getAllUsers = (req, res) =>
 	User.findAll()
 		.then((Users) => {
@@ -139,3 +135,17 @@ exports.getAllUsers = (req, res) =>
 			});
 		});
 
+// PROMOTE OR DEMOTE ADMIN
+
+exports.admin = (req, res, next) => {
+	let administrator;
+	function userUpdate() {
+		User.update({ ...administrator, id: req.params.id }, { where: { id: req.params.id } })
+		.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
+		.catch((error) => res.status(400).json({ error }));
+	}
+	User.findOne({ id: req.params.id }).then((user) => {
+		administrator = {administrator : !user.administrator}
+		userUpdate()
+	});
+};
