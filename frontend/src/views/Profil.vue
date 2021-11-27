@@ -163,7 +163,6 @@ section {
 	color: black;
 	margin: 0px 5px;
 	margin: 10px;
-	align-content: center;
 	font-size: 0.8em;
 }
 .action-profil:hover {

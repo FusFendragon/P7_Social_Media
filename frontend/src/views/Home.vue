@@ -7,10 +7,9 @@
 					<div v-for="user in users" :key="user.id" class="author">
 						<img v-if="user.id == post.userId" :src="`${user.imageUrl}`" />
 						<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
-						<DeleteButton @click="deletePost(post.id)" v-if="user.administrator === 1 || post.userId == userId" />
+						<DeleteButton @click="deletePost(post.id)" v-if="adminStatue === 1 || post.userId == userId" />
 					</div>
 				</router-link>
-
 				<span class="hr"></span>
 				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style router-profil">
 					<p>{{ post.message }}</p>
@@ -37,6 +36,7 @@ export default {
 		return {
 			users: [],
 			posts: [],
+			adminStatue: "",
 		};
 	},
 	methods: {
@@ -71,11 +71,18 @@ export default {
 			const data = await res.json();
 			return data;
 		},
+		async adminView() {
+			const res = await fetch(`http://localhost:3000/users/${this.userId}`);
+			const data = await res.json();
+			const adminStatue = data.administrator === true ? 1 : 0;
+			return adminStatue;
+		},
 	},
 	async created() {
 		this.posts = await this.fetchPosts();
 		this.users = await this.fetchUsers();
 		this.userId = localStorage.getItem("userId");
+		this.adminStatue = await this.adminView();
 	},
 };
 </script>

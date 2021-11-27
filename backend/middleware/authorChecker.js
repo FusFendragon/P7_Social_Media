@@ -1,24 +1,32 @@
 const Post = require("../models/post");
+const User = require("../models/User");
 
 require("dotenv").config();
 const tokenSecret = "SECRET_TOKEN";
 
 module.exports = (req, res, next) => {
-	Post.findOne({
+	User.findOne({
 		where: {
-			id: req.params.id,
+			id: req.userId,
 		},
-	})
-		.then((post) => {
-			console.log(post.userId);
-			if (post.userId !== req.userId) {
-				return res.status(403).json({ message: "Vous n'êtes pas autorisé à faire cela" });
-			}
-			next();
+	}).then((user) => {
+		Post.findOne({
+			where: {
+				id: req.params.id,
+			},
 		})
-		.catch((error) => {
-			res.status(404).json({
-				error: error,
+			.then((post) => {
+				console.log(post.userId);
+				if (post.userId === req.userId || user.administrator === true) {
+					next();
+				} else {
+					return res.status(403).json({ message: "Vous n'êtes pas autorisé à faire cela" });
+				}
+			})
+			.catch((error) => {
+				res.status(404).json({
+					error: error,
+				});
 			});
-		});
+	});
 };
