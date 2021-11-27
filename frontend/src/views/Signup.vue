@@ -2,7 +2,7 @@
   <div id="login-form">
     <form @submit="onSubmit">
       <h2>Inscription</h2>
-      <div>{{ signupStatus }}</div>
+      <div id="signup-status">{{ signupStatus }}</div>
       <label><b>Adresse e-mail</b></label>
       <input
         type="text"
@@ -132,6 +132,11 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #fbb656;
   border: 1px solid #fbb656;
+}
+#signup-status {
+  color: red;
+  margin: 5px 0px 20px;
+  font-weight: 1000;
 }
 
 </style>
