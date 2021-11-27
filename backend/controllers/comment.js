@@ -2,13 +2,15 @@ const Comment = require("../models/comment");
 
 // ADD POSTS
 exports.createComment = (req, res, next) => {
-	console.log(req.body.postId);
+	const imageOrNot = req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null;
+	console.log(req.userId);
 	const data = {
-		userId: req.body.userId,
+		userId: req.userId,
 		message: req.body.message,
 		postId: req.body.postId,
+		imageUrl: imageOrNot,
 	};
-	let { userId, message, postId } = data;
+	let { userId, message, postId, imageUrl } = data;
 	if (!userId) {
 		return res.status(401).json({ error: "Utilisateur non connecté" });
 	}
@@ -16,6 +18,7 @@ exports.createComment = (req, res, next) => {
 		userId,
 		message,
 		postId,
+		imageUrl,
 	})
 		.then((comment) => {
 			res.status(200).json(comment);

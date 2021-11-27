@@ -7,7 +7,6 @@ const authorChecker = require("../middleware/authorChecker");
 
 const postCtrl = require("../controllers/post");
 
-// GET ALL POSTS
 router.get("/", postCtrl.getAllPosts);
 router.post("/add", auth, multer, postCtrl.createPost);
 router.get("/:id", postCtrl.getOnePost);

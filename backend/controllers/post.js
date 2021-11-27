@@ -3,8 +3,9 @@ const Post = require("../models/post");
 // ADD POSTS
 exports.createPost = (req, res, next) => {
 	const imageOrNot = req.file ? (`${req.protocol}://${req.get("host")}/images/${req.file.filename}`) : null;
+	console.log(req.userId);
 	const data = {
-		userId: req.body.userId,
+		userId: req.userId,
 		message: req.body.message,
 		imageUrl: imageOrNot
 	};
