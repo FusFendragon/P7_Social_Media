@@ -28,6 +28,8 @@
 				<div class="action-list">
 					<router-link :to="{ name: 'ModifyUser', params: { id: user.id } }" class="action-profil">Modifier le compte</router-link>
 					<router-link :to="{}" class="action-profil" @Click="deleteUser(`${this.$route.params.id}`)">Supprimer le compte</router-link>
+					<router-link :to="{}" class="action-profil" @Click="changeAdministratorStatue(`${this.$route.params.id}`)" v-if="user.administrator === false">Rendre l'utilisateur administrateur</router-link>
+					<router-link :to="{}" class="action-profil" @Click="changeAdministratorStatue(`${this.$route.params.id}`)" v-if="user.administrator === true">Retirer l'utilisateur des administrateurs</router-link>
 				</div>
 			</div>
 		</div>
@@ -59,11 +61,14 @@ export default {
 					method: "DELETE",
 				});
 				res.status === 201 ? window.open("/", "_self") : alert("L'utilisateur' n'a pas été suprrimé suite à une erreur");
-				if ((id === localStorage.getItem("userId"))) {
+				if (id === localStorage.getItem("userId")) {
 					localStorage.clear();
 				}
 			}
 		},
+    changeAdministratorStatue() {
+      this.user.administrator = !this.user.administrator
+    }
 	},
 	async created() {
 		this.user = await this.fetchUser();
@@ -140,9 +145,12 @@ section {
 	color: black;
 }
 .action-list {
-	margin: 20px;
+	display: flex;
+	flex-wrap: wrap;
 }
 .action-profil {
+	width: auto;
+	height: 20px;
 	background-color: #dbd0c0;
 	padding: 10px;
 	border: 2px solid black;
@@ -150,6 +158,9 @@ section {
 	text-decoration: none;
 	color: black;
 	margin: 0px 5px;
+	margin: 10px;
+	align-content: center;
+	font-size: 0.8em;
 }
 .action-profil:hover {
 	background-color: black;
