@@ -106,7 +106,7 @@ export default {
         });
         res.status === 201
           ? window.open("/", "_self")
-          : alert("L'utilisateur n'a pas été suprrimé suite à une erreur");
+          : "";
         if (id === localStorage.getItem("userId")) {
           localStorage.clear();
         }

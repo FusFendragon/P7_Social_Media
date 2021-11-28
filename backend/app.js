@@ -1,11 +1,7 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 
 
-// MODELS
-const User = require("./models/User");
-const Post = require("./models/post");
-const Comment = require("./models/comment");
 
 // Database
 const db = require("./config/database");
@@ -15,10 +11,9 @@ async function test() {
 		await db.authenticate();
 		console.log("Connecté à la base de données MySQL!");
 
-// COMMENT THE LINE AFTER YOUR FIRST CONNECTION
+		// COMMENT THE LINE AFTER YOUR FIRST CONNECTION
 		await db.sync({ force: true });
-
-
+		
 	} catch (error) {
 		console.error("Impossible de se connecter, erreur suivante :", error);
 	}
@@ -38,26 +33,29 @@ app.use(express.json());
 
 // Post routes
 
-app.use("/images", express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/users", require("./routes/user"));
 app.use("/posts", require("./routes/post"));
 app.use("/comments", require("./routes/comment"));
 
-module.exports = app;
-
-// hasmany belongto eager&leasy loading
+// MODELS
+const User = require("./models/User");
+const Post = require("./models/post");
+const Comment = require("./models/comment");
 
 User.hasMany(Post, {
-	onDelete: 'CASCADE'
+	onDelete: "CASCADE",
 });
 Post.belongsTo(User);
 
 Post.hasMany(Comment, {
-	onDelete: 'CASCADE'
+	onDelete: "CASCADE",
 });
 Comment.belongsTo(Post);
 
 User.hasMany(Comment, {
-	onDelete: 'CASCADE'
+	onDelete: "CASCADE",
 });
 Comment.belongsTo(User);
+
+module.exports = app;

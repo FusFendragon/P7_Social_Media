@@ -15,7 +15,7 @@ Then clone this repo and run `npm install` on frontend and backend folder.
 ## Usage ##
 
 rename backend/.env copy for .env, put in all your secret params for Database and token generator,
-Lunch server with 'npm run start' and if you correctly connect on Database comment the force sync on backend/app.js (line 19)
+Lunch server with 'npm run start' and if you correctly connect on Database comment the force sync on backend/app.js (line 15)
 
 Then go to frontend for start it with 'npm run serve'
 

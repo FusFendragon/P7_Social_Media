@@ -44,18 +44,18 @@ exports.getComments = (req, res, next) => {
 // DELETE COMMENT
 
 exports.deleteComment = (req, res, next) => {
-	Comment.findOne({where: {id: req.params.id}})
+	Comment.findOne({ where: { id: req.params.id } })
 		.then((comment) => {
 			if (comment.imageUrl !== null) {
 				console.log(comment.imageUrl);
 				const filename = comment.imageUrl.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {
-					Comment.destroy({where: {id: req.params.id}})
+					Comment.destroy({ where: { id: req.params.id } })
 						.then(() => res.status(201).json({ message: "Comment with image Deleted  !" }))
 						.catch((error) => res.status(400).json({ error }));
 				});
 			} else {
-				Comment.destroy({where: {id: req.params.id}})
+				Comment.destroy({ where: { id: req.params.id } })
 					.then(() => res.status(201).json({ message: "Comment Deleted !" }))
 					.catch((error) => res.status(400).json({ error }));
 			}
