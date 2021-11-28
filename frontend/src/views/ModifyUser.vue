@@ -76,7 +76,7 @@ export default {
       formData.append("bio", this.bio);
       console.log(formData);
       const res = await fetch(
-        `http://localhost:3000/users/modify/${this.$route.params.id}`,
+        `http://localhost:3000/users/${this.$route.params.id}`,
         {
           method: "PUT",
           body: formData,

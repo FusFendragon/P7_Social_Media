@@ -14,7 +14,7 @@ router.post('/signup', multer, userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/:id', userCtrl.getOneUser);
 router.get('/', userCtrl.getAllUsers);
-router.put('/modify/:id', multer,  userCtrl.modifyUser);
+router.put('/:id', multer,  userCtrl.modifyUser);
 router.delete('/:id', auth, userCtrl.deleteUser);
 router.put('/admin/:id',  userCtrl.admin);
 

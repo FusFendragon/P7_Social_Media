@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const fs = require("fs");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
@@ -23,6 +24,35 @@ exports.createPost = (req, res, next) => {
 		})
 		.catch((error) => res.status(400).json({ error }));
 };
+
+exports.modifyPost = (req, res, next) => {
+	let postObject;
+	console.log(req.body);
+	function postUpdate() {
+		Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
+			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
+			.catch((error) => res.status(400).json({ error }));
+	}
+	if (req.file) {
+		Post.findOne({ id: req.params.id })
+			.then((post) => {
+				const filename = post.imageUrl.split("/images/")[1];
+				console.log(filename);
+				fs.unlink(`images/${filename}`, () => {});
+
+				postObject = {
+					...req.body,
+					imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+				};
+				postUpdate();
+			})
+			// .catch((error) => res.status(500).json({ error }));
+	} else {
+		postObject = { ...req.body };
+		postUpdate();
+	}
+};
+
 
 
 

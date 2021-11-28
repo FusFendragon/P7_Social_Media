@@ -1,17 +1,17 @@
 <template>
 	<section>
 		<div class="post">
-			<!-- <router-link
+			<router-link
         :to="{ name: 'Profil', params: { id: post.userId } }"
         class="router-style"
-      > -->
+      >
 
 			<div v-for="user in users" :key="user.id" class="user">
 				<img v-if="user.id == post.userId" :src="user.imageUrl" />
 				<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
 			</div>
 
-			<!-- </router-link> -->
+			</router-link>
 			<p>{{ post.message }}</p>
 			<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image" />
 			<div class="stats">
