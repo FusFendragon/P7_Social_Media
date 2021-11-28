@@ -5,6 +5,7 @@
 				<div v-for="user in users" :key="user.id" class="user">
 					<img v-if="user.id == post.userId" :src="user.imageUrl" />
 					<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
+					<DeleteButton @click="deletePost(post.id)" v-if="adminStatue === 1 || post.userId == userId" />
 				</div>
 			</router-link>
 			<p>{{ post.message }}</p>
@@ -17,6 +18,7 @@
 				<div v-for="user in users" :key="user.id" class="user">
 					<img v-if="user.id == comment.userId" :src="user.imageUrl" />
 					<h2 v-if="user.id == comment.userId">{{ user.name }}</h2>
+					<DeleteButton @click="deleteComment(comment.id)" v-if="adminStatue === 1 || post.userId == userId" />
 				</div>
 				<div>
 					{{ comment.message }}
@@ -32,16 +34,19 @@
 
 <script>
 import AddPost from "@/components/AddPost.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 export default {
 	name: "Post",
 	components: {
 		AddPost,
+		DeleteButton,
 	},
 	data() {
 		return {
 			users: [],
 			post: [],
 			comments: [],
+			adminStatue: "",
 		};
 	},
 	methods: {
@@ -62,6 +67,28 @@ export default {
 			const data = await res.json();
 			this.comments = [data, ...this.comments];
 		},
+		async deletePost() {
+			const token = localStorage.getItem("token");
+			if (confirm("Voulez vous supprimer le message ?")) {
+				const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`, {
+					method: "DELETE",
+					headers: { authorization: "Bearer " + token },
+				});
+				const data = await res.json();
+				res.status === 201 ? this.$router.push("/") : alert(data.message);
+			}
+		},
+		async deleteComment(id) {
+			const token = localStorage.getItem("token");
+			if (confirm("Voulez vous supprimer le message ?")) {
+				const res = await fetch(`http://localhost:3000/Comments/${id}`, {
+					method: "DELETE",
+					headers: { authorization: "Bearer " + token },
+				});
+				const data = await res.json();
+				res.status === 201 ? (this.comments = this.comments.filter((comment) => comment.id !== id)) : alert(data.message);
+			}
+		},
 		async fetchComments() {
 			const token = localStorage.getItem("token");
 			const res = await fetch(`http://localhost:3000/comments/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
@@ -74,11 +101,20 @@ export default {
 			const data = await res.json();
 			return data;
 		},
+		async adminView() {
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/users/${this.userId}`, { headers: { authorization: "Bearer " + token } });
+			const data = await res.json();
+			const adminStatue = data.administrator === true ? 1 : 0;
+			return adminStatue;
+		},
 	},
 	async created() {
 		this.post = await this.fetchPost();
 		this.comments = await this.fetchComments();
 		this.users = await this.fetchUsers();
+		this.userId = localStorage.getItem("userId");
+		this.adminStatue = await this.adminView();
 	},
 };
 </script>

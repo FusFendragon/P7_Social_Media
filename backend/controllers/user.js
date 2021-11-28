@@ -68,7 +68,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-	User.findOne({ id: req.params.id })
+	User.findOne({where: {id: req.params.id}})
 		.then((user) => {
 			bcrypt
 				.compare(req.body.password, user.password)
@@ -179,7 +179,7 @@ exports.admin = (req, res, next) => {
 			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
 			.catch((error) => res.status(400).json({ error }));
 	}
-	User.findOne({ id: req.params.id }).then((user) => {
+	User.findOne({where: {id: req.params.id}}).then((user) => {
 		administrator = { administrator: !user.administrator };
 		userUpdate();
 	});

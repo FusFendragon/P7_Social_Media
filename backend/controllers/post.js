@@ -35,7 +35,7 @@ exports.modifyPost = (req, res, next) => {
 			.catch((error) => res.status(400).json({ error }));
 	}
 	if (req.file) {
-		Post.findOne({ id: req.params.id }).then((post) => {
+		Post.findOne({where: {id: req.params.id}}).then((post) => {
 			const filename = post.imageUrl.split("/images/")[1];
 			console.log(filename);
 			fs.unlink(`images/${filename}`, () => {});
@@ -56,7 +56,7 @@ exports.modifyPost = (req, res, next) => {
 // DELETE POST
 
 exports.deletePost = (req, res, next) => {
-	Post.findOne({ id: req.params.id })
+	Post.findOne({ where: {id: req.params.id} })
 		.then((post) => {
 			if (post.imageUrl !== null) {
 				console.log(post.imageUrl);
@@ -67,7 +67,7 @@ exports.deletePost = (req, res, next) => {
 						.catch((error) => res.status(400).json({ error }));
 				});
 			} else {
-				post.destroy({ id: req.params.id })
+				post.destroy({where: {id: req.params.id}})
 					.then(() => res.status(200).json({ message: "Post Deleted !" }))
 					.catch((error) => res.status(400).json({ error }));
 			}

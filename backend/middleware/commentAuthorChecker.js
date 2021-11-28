@@ -1,4 +1,4 @@
-const Post = require("../models/post");
+const Comment = require("../models/comment");
 const User = require("../models/User");
 
 module.exports = (req, res, next) => {
@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 			id: req.userId,
 		},
 	}).then((user) => {
-		Post.findOne({
+		Comment.findOne({
 			where: {
 				id: req.params.id,
 			},
