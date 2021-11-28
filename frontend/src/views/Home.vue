@@ -14,9 +14,8 @@
 				<router-link :to="{ name: 'Post', params: { id: post.id } }" class="router-style router-profil">
 					<p>{{ post.message }}</p>
 					<img :src="`${post.imageUrl}`" v-if="post.imageUrl" class="post-image" />
-					<div class="stats">
-						<span class="date">{{ post.createdAt }}</span>
-					</div>
+						<div class="date">{{ moment(post.createdAt).format("YYYY-MM-DD") }} <span v-if="post.createdAt !== post.updatedAt">Modifié</span></div>
+
 				</router-link>
 			</div>
 		</div>
@@ -24,6 +23,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import AddPost from "@/components/AddPost.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 export default {
@@ -39,7 +39,9 @@ export default {
 			adminStatue: "",
 		};
 	},
+
 	methods: {
+		moment,
 		async addPost(formData) {
 			const token = localStorage.getItem("token");
 			const res = await fetch("http://localhost:3000/posts/add", {
@@ -82,9 +84,9 @@ export default {
 		},
 	},
 	async created() {
+		this.userId = localStorage.getItem("userId");
 		this.posts = await this.fetchPosts();
 		this.users = await this.fetchUsers();
-		this.userId = localStorage.getItem("userId");
 		this.adminStatue = await this.adminView();
 	},
 };
@@ -155,7 +157,11 @@ export default {
 	object-fit: cover;
 }
 .date {
-	align-self: center;
+	width: 100%;
+	text-align: right;
+}
+.date span {
+	font-style: italic;
 }
 .router-style {
 	text-decoration: none;

@@ -110,10 +110,10 @@ export default {
 		},
 	},
 	async created() {
+		this.userId = localStorage.getItem("userId");
 		this.post = await this.fetchPost();
 		this.comments = await this.fetchComments();
 		this.users = await this.fetchUsers();
-		this.userId = localStorage.getItem("userId");
 		this.adminStatue = await this.adminView();
 	},
 };
