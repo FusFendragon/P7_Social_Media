@@ -8,7 +8,7 @@
 <script>
 import TheNavigation from "@/components/TheNaviguation";
 export default {
-    name: 'App',
+  name: "App",
   components: {
     TheNavigation,
   },
@@ -22,14 +22,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .router-style {
-	text-decoration: none;
-	color: rgb(45, 125, 255);
+  text-decoration: none;
+  color: rgb(45, 125, 255);
 }
 .router-style:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 </style>

@@ -24,7 +24,7 @@
       <label><b>Nom</b></label>
       <input
         type="text"
-        placeholder="Entrer votre mot de passe"
+        placeholder="Entrer votre nom"
         name="name"
         v-model="name"
         required
@@ -49,7 +49,10 @@
 
       <input type="submit" id="submit" value="Valider" />
     </form>
-        <h3>Vous avez deja un compte ? <router-link to="/login">Cliquez ici</router-link></h3>
+    <h3>
+      Vous avez deja un compte ?
+      <router-link to="/login">Cliquez ici</router-link>
+    </h3>
   </div>
 </template>
 
@@ -82,6 +85,9 @@ export default {
       });
       const data = await res.json();
       this.signupStatus = data.message;
+      if (res.status === 201) {
+        this.$router.push("/");
+      }
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -138,5 +144,4 @@ input[type="submit"]:hover {
   margin: 5px 0px 20px;
   font-weight: 1000;
 }
-
 </style>

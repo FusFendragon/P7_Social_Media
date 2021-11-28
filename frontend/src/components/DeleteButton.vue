@@ -6,8 +6,11 @@
 
 <style scoped>
 .delete-button {
+  width: 30px;
+  height: 30px;
   background-color: #dbd0c0;
   border-radius: 5px;
+  align-self: center;
 }
 .delete-button:hover {
   background-color: black;

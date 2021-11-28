@@ -5,7 +5,7 @@ const User = require("../models/User");
 const fs = require("fs");
 
 require("dotenv").config();
-const tokenSecret = "SECRET_TOKEN";
+const tokenSecret = process.env.TOKEN_SECRET;
 
 // SIGNUP / ADD USER
 

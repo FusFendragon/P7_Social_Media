@@ -1,0 +1,7 @@
+#- phpMyAdmin
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+
+#- Secret Token Key
+TOKEN_SECRET=''

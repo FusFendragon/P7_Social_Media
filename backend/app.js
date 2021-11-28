@@ -14,7 +14,11 @@ async function test() {
 	try {
 		await db.authenticate();
 		console.log("Connecté à la base de données MySQL!");
-		// await db.sync({ force: true });
+
+// COMMENT THE LINE AFTER YOUR FIRST CONNECTION
+		await db.sync({ force: true });
+
+
 	} catch (error) {
 		console.error("Impossible de se connecter, erreur suivante :", error);
 	}
