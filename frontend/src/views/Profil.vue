@@ -64,7 +64,7 @@ export default {
 					method: "DELETE",
 					headers: { authorization: "Bearer " + token },
 				});
-				res.status === 201 ? window.open("/", "_self") : alert("L'utilisateur' n'a pas été suprrimé suite à une erreur");
+				res.status === 201 ? window.open("/", "_self") : alert("L'utilisateur n'a pas été suprrimé suite à une erreur");
 				if (id === localStorage.getItem("userId")) {
 					localStorage.clear();
 				}

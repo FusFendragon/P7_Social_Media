@@ -62,3 +62,5 @@ exports.deleteComment = (req, res, next) => {
 		})
 		.catch((error) => res.status(500).json({ error }));
 };
+
+// DELETE ALL IMAGE COMMENT

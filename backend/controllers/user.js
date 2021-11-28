@@ -68,7 +68,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-	User.findOne({where: {id: req.params.id}})
+	User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
 			bcrypt
 				.compare(req.body.password, user.password)
@@ -121,13 +121,12 @@ exports.modifyUser = (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {
 	const userId = req.params.id;
-	User.findOne({ where: { id: userId } })
-		.then((user) => {
-			const defaultFilename = `${req.protocol}://${req.get("host")}/images/defaultAvatar.jpg`;
-			const filename = user.imageUrl.split("/images/")[1];
-			if (defaultFilename === !filename) {
-				fs.unlink(`images/${filename}`, () => {});
-			}
+	User.findOne({ where: { id: userId } }).then((user) => {
+		const defaultFilename = `defaultAvatar.jpg`;
+		const filename = user.imageUrl.split("/images/")[1];
+		console.log(filename);
+		console.log(defaultFilename);
+		if (filename === defaultFilename) {
 			User.destroy({
 				where: {
 					id: userId,
@@ -135,12 +134,18 @@ exports.deleteUser = (req, res, next) => {
 			})
 				.then(() => res.status(201).json({ message: "Utilisateur supprimé !" }))
 				.catch((error) => res.status(400).json({ error }));
-		})
-		.catch(() => {
-			res.status(404).json({
-				message: "L'utilisateur n'a pas été trouvé",
+		} else {
+			fs.unlink(`images/${filename}`, () => {
+				User.destroy({
+					where: {
+						id: userId,
+					},
+				})
+					.then(() => res.status(201).json({ message: "Utilisateur supprimé !" }))
+					.catch((error) => res.status(400).json({ error }));
 			});
-		});
+		}
+	});
 };
 
 // GET ONE USER
@@ -179,7 +184,7 @@ exports.admin = (req, res, next) => {
 			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
 			.catch((error) => res.status(400).json({ error }));
 	}
-	User.findOne({where: {id: req.params.id}}).then((user) => {
+	User.findOne({ where: { id: req.params.id } }).then((user) => {
 		administrator = { administrator: !user.administrator };
 		userUpdate();
 	});
