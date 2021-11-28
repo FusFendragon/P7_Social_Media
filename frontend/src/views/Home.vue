@@ -94,14 +94,13 @@ export default {
 
 <style scoped>
 .home {
-	width: 40%;
 	max-width: 1400px;
 	margin: auto;
 }
 .posts {
 	display: flex;
 	flex-direction: column;
-	max-width: 550px;
+	max-width: 650px;
 	margin: 0 auto;
 }
 .post {
@@ -138,8 +137,10 @@ export default {
 	margin: 0px 0px 5px 10px;
 }
 .post h2 {
+	font-size: 1em;
+	padding-top: 5px;
 	text-align: left;
-	margin: 20px 10px 10px 5px;
+	margin: 20px 10px 0px 5px;
 }
 .post h2:hover {
 	text-decoration: underline;
@@ -158,6 +159,7 @@ export default {
 }
 .date {
 	width: 100%;
+	margin-left: 60%;
 	text-align: right;
 }
 .date span {

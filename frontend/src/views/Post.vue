@@ -11,8 +11,9 @@
 			<p>{{ post.message }}</p>
 			<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image" />
 			<div class="stats">
-				<span class="date">{{ post.createdAt }}</span>
+				<span class="date">{{ moment(post.createdAt).format("YYYY-MM-DD") }}</span>
 			</div>
+			<div id="modify-btn"><router-link :to="{ name: 'ModifyPost', params: { id: post.id } }">Modifier le message</router-link></div>
 			<AddPost @add-post="addPost" />
 			<div v-for="comment in comments" :key="comment.id" class="comments">
 				<div v-for="user in users" :key="user.id" class="user">
@@ -25,7 +26,7 @@
 					<img :src="`${comment.imageUrl}`" v-if="comment.imageUrl" class="post-image" />
 				</div>
 				<div class="stats">
-					<span class="date">{{ post.createdAt }}</span>
+					<span class="date">{{ moment(post.createdAt).format("YYYY-MM-DD") }}</span>
 				</div>
 			</div>
 		</div>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import AddPost from "@/components/AddPost.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 export default {
@@ -50,6 +52,7 @@ export default {
 		};
 	},
 	methods: {
+		moment,
 		async fetchPost() {
 			const token = localStorage.getItem("token");
 			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
