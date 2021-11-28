@@ -44,6 +44,7 @@ export default {
 header {
 	display: flex;
 	align-items: center;
+	margin: auto;
 }
 header img {
 	width: 80%;

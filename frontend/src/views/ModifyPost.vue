@@ -11,7 +11,7 @@
 		</div>
 		<form @submit="onSubmit" class="add-form">
 			<label class="label-form">Modidiez votre message :</label>
-			<input type="text" v-model="message" name="message" placeholder="Votre Post..." @input="countChars()" />
+			<input type="text" v-model="message" name="message" placeholder="Modifiez votre message..." @input="countChars()" />
 			<div id="btn-input">
 				<input type="file" id="file" ref="file" v-on:change="handleFileUpload()" name="imageUrl" />
 				<span>{{ numberOfChars }}/350</span>
@@ -35,7 +35,8 @@ export default {
 	},
 	methods: {
 		async fetchPost() {
-			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
@@ -58,7 +59,8 @@ export default {
 			this.file = this.$refs.file.files[0];
 		},
 		async fetchUser() {
-			const res = await fetch(`http://localhost:3000/users/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/users/${this.post.userId}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},

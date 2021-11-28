@@ -1,16 +1,11 @@
 <template>
 	<section>
 		<div class="post">
-			<router-link
-        :to="{ name: 'Profil', params: { id: post.userId } }"
-        class="router-style"
-      >
-
-			<div v-for="user in users" :key="user.id" class="user">
-				<img v-if="user.id == post.userId" :src="user.imageUrl" />
-				<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
-			</div>
-
+			<router-link :to="{ name: 'Profil', params: { id: post.userId } }" class="router-style">
+				<div v-for="user in users" :key="user.id" class="user">
+					<img v-if="user.id == post.userId" :src="user.imageUrl" />
+					<h2 v-if="user.id == post.userId">{{ user.name }}</h2>
+				</div>
 			</router-link>
 			<p>{{ post.message }}</p>
 			<img :src="`${post.imageUrl}`" v-if="post.imageUrl != null" class="post-image" />
@@ -51,7 +46,8 @@ export default {
 	},
 	methods: {
 		async fetchPost() {
-			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/posts/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
@@ -67,12 +63,14 @@ export default {
 			this.comments = [data, ...this.comments];
 		},
 		async fetchComments() {
-			const res = await fetch(`http://localhost:3000/comments/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/comments/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
 		async fetchUsers() {
-			const res = await fetch("http://localhost:3000/users");
+			const token = localStorage.getItem("token");
+			const res = await fetch("http://localhost:3000/users", { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},

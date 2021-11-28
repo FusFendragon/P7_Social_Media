@@ -68,44 +68,79 @@ exports.login = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-	let userObject;
-	console.log(req.body);
-	function userUpdate() {
-		User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
-			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
-			.catch((error) => res.status(400).json({ error }));
-	}
-	if (req.file) {
-		User.findOne({ id: req.params.id })
-			.then((user) => {
-				const filename = user.imageUrl.split("/images/")[1];
-				console.log(filename);
-				fs.unlink(`images/${filename}`, () => {});
+	User.findOne({ id: req.params.id })
+		.then((user) => {
+			bcrypt
+				.compare(req.body.password, user.password)
+				.then((valid) => {
+					let password = req.body.newPassword ? req.body.newPassword : req.body.password;
+					if (!valid) {
+						return res.status(401).json({ message: "Ancien Mot de passe incorrect !" });
+					}
+					let passwordValidator = new RegExp("(?=.*[a-z])(?=.*[0-9])(?=.{8,})");
+					if (validator.validate(req.body.email) === false) {
+						return res.status(401).json({ message: "Veuillez saisir un email nouvelle email valide !" });
+					}
+					if (passwordValidator.test(password) === false) {
+						return res.status(401).json({ message: "Veuillez saisir un nouveau mot de passe plus complexe avec 8 caractères et un chiffre minimum" });
+					}
+					bcrypt
+						.hash(password, 10)
+						.then((hash) => {
+							let userObject;
+							function userUpdate() {
+								User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
+									.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
+									.catch((error) => res.status(400).json({ error }));
+							}
 
-				userObject = {
-					...req.body,
-					imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-				};
-				userUpdate();
-			})
-			.catch((error) => res.status(500).json({ error }));
-	} else {
-		userObject = { ...req.body };
-		userUpdate();
-	}
+							if (req.file) {
+								const filename = user.imageUrl.split("/images/")[1];
+								console.log(filename);
+								fs.unlink(`images/${filename}`, () => {});
+
+								userObject = {
+									...req.body,
+									password: hash,
+									imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+								};
+								userUpdate();
+							} else {
+								userObject = { ...req.body, password: hash };
+								userUpdate();
+							}
+						})
+						.catch((error) => res.status(500).json({ error }));
+				})
+				.catch(() => res.status(500).json({ message: "La vérification du message est impossible" }));
+		})
+		.catch(() => res.status(500).json({ message: "Utilisateur inconnu" }));
 };
 
 // DELETE USER
 
 exports.deleteUser = (req, res, next) => {
 	const userId = req.params.id;
-	User.destroy({
-		where: {
-			id: userId,
-		},
-	})
-		.then(() => res.status(201).json({ message: "Utilisateur supprimé !" }))
-		.catch((error) => res.status(400).json({ error }));
+	User.findOne({ where: { id: userId } })
+		.then((user) => {
+			const defaultFilename = `${req.protocol}://${req.get("host")}/images/defaultAvatar.jpg`;
+			const filename = user.imageUrl.split("/images/")[1];
+			if (defaultFilename === !filename) {
+				fs.unlink(`images/${filename}`, () => {});
+			}
+			User.destroy({
+				where: {
+					id: userId,
+				},
+			})
+				.then(() => res.status(201).json({ message: "Utilisateur supprimé !" }))
+				.catch((error) => res.status(400).json({ error }));
+		})
+		.catch(() => {
+			res.status(404).json({
+				message: "L'utilisateur n'a pas été trouvé",
+			});
+		});
 };
 
 // GET ONE USER
@@ -141,11 +176,11 @@ exports.admin = (req, res, next) => {
 	let administrator;
 	function userUpdate() {
 		User.update({ ...administrator, id: req.params.id }, { where: { id: req.params.id } })
-		.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
-		.catch((error) => res.status(400).json({ error }));
+			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
+			.catch((error) => res.status(400).json({ error }));
 	}
 	User.findOne({ id: req.params.id }).then((user) => {
-		administrator = {administrator : !user.administrator}
-		userUpdate()
+		administrator = { administrator: !user.administrator };
+		userUpdate();
 	});
 };

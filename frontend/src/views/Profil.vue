@@ -46,19 +46,23 @@ export default {
 	},
 	methods: {
 		async fetchPostsUser() {
-			const res = await fetch(`http://localhost:3000/posts/user/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/posts/user/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
 		async fetchUser() {
-			const res = await fetch(`http://localhost:3000/users/${this.$route.params.id}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/users/${this.$route.params.id}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
 		async deleteUser(id) {
+			const token = localStorage.getItem("token");
 			if (confirm("Êtes-vous sûr de supprimer le compte ainsi que tous ses postes ?")) {
 				const res = await fetch(`http://localhost:3000/users/${id}`, {
 					method: "DELETE",
+					headers: { authorization: "Bearer " + token },
 				});
 				res.status === 201 ? window.open("/", "_self") : alert("L'utilisateur' n'a pas été suprrimé suite à une erreur");
 				if (id === localStorage.getItem("userId")) {
@@ -67,8 +71,10 @@ export default {
 			}
 		},
 		changeAdministratorStatue(id) {
+			const token = localStorage.getItem("token");
 			fetch(`http://localhost:3000/users/admin/${id}`, {
 				method: "PUT",
+				headers: { authorization: "Bearer " + token },
 				body: this.user,
 			}),
 				(this.user.administrator = !this.user.administrator);

@@ -7,8 +7,8 @@ const authorChecker = require("../middleware/authorChecker");
 
 const commentCtrl = require("../controllers/comment");
 
-router.get("/:id", commentCtrl.getComments);
-router.delete("/:id", commentCtrl.deleteComment);
+router.get("/:id", auth, commentCtrl.getComments);
+router.delete("/:id", auth, authorChecker, commentCtrl.deleteComment);
 router.post("/add", auth, multer, commentCtrl.createComment);
 
 module.exports = router;

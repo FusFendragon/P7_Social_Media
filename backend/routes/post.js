@@ -7,11 +7,11 @@ const authorChecker = require("../middleware/authorChecker");
 
 const postCtrl = require("../controllers/post");
 
-router.get("/", postCtrl.getAllPosts);
+router.get("/", auth, postCtrl.getAllPosts);
 router.post("/add", auth, multer, postCtrl.createPost);
-router.get("/:id", postCtrl.getOnePost);
-router.put("/:id", auth, multer,  postCtrl.modifyPost);
+router.get("/:id", auth, postCtrl.getOnePost);
+router.put("/:id", auth, multer, authorChecker, postCtrl.modifyPost);
 router.delete("/:id", auth, authorChecker, postCtrl.deletePost);
-router.get("/user/:id", postCtrl.getAllPostsFromUser);
+router.get("/user/:id", auth, postCtrl.getAllPostsFromUser);
 
 module.exports = router;

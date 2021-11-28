@@ -62,17 +62,20 @@ export default {
 			}
 		},
 		async fetchPosts() {
-			const res = await fetch("http://localhost:3000/posts");
+			const token = localStorage.getItem("token");
+			const res = await fetch("http://localhost:3000/posts", { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
 		async fetchUsers() {
-			const res = await fetch("http://localhost:3000/users");
+			const token = localStorage.getItem("token");
+			const res = await fetch("http://localhost:3000/users", { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			return data;
 		},
 		async adminView() {
-			const res = await fetch(`http://localhost:3000/users/${this.userId}`);
+			const token = localStorage.getItem("token");
+			const res = await fetch(`http://localhost:3000/users/${this.userId}`, { headers: { authorization: "Bearer " + token } });
 			const data = await res.json();
 			const adminStatue = data.administrator === true ? 1 : 0;
 			return adminStatue;
@@ -89,7 +92,9 @@ export default {
 
 <style scoped>
 .home {
+	width: 40%;
 	max-width: 1400px;
+	margin: auto;
 }
 .posts {
 	display: flex;
