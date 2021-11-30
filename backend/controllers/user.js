@@ -56,7 +56,6 @@ exports.login = (req, res, next) => {
 					if (!valid) {
 						return res.status(401).json({ error: "Mot de passe incorrect !" });
 					}
-					console.log(user.id);
 					res.status(200).json({
 						userId: user.id,
 						token: jwt.sign({ userId: user.id }, tokenSecret, { expiresIn: "24h" }),
@@ -96,7 +95,6 @@ exports.modifyUser = (req, res, next) => {
 
 							if (req.file) {
 								const filename = user.imageUrl.split("/images/")[1];
-								console.log(filename);
 								fs.unlink(`images/${filename}`, () => {});
 
 								userObject = {
@@ -124,8 +122,6 @@ exports.deleteUser = (req, res, next) => {
 	User.findOne({ where: { id: userId } }).then((user) => {
 		const defaultFilename = `defaultAvatar.jpg`;
 		const filename = user.imageUrl.split("/images/")[1];
-		console.log(filename);
-		console.log(defaultFilename);
 		if (filename === defaultFilename) {
 			User.destroy({
 				where: {
@@ -152,7 +148,6 @@ exports.deleteUser = (req, res, next) => {
 
 exports.getOneUser = (req, res, next) => {
 	const userId = req.params.id;
-	console.log(userId);
 	User.findOne({ where: { id: userId } })
 		.then((user) => {
 			res.status(200).json(user);

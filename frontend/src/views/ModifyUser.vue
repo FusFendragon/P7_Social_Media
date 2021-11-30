@@ -94,8 +94,6 @@ export default {
       formData.append("newPassword", this.newPassword);
       formData.append("name", this.name);
       formData.append("bio", this.bio);
-      console.log(this.newPasswordCheck);
-      console.log(this.password);
       if (this.newPasswordCheck == this.newPassword) {
         const res = await fetch(
           `http://localhost:3000/users/${this.$route.params.id}`,
@@ -106,7 +104,6 @@ export default {
           }
         );
         const data = await res.json();
-        console.log(data);
         this.signupStatus = data.message;
         this.$router.push(`/Profil/${this.$route.params.id}`);
       } else {

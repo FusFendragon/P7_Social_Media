@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
 			throw '403: unauthorized request';
 		} else {
 			req.userId = userId;
-			console.log(req.userId);
 			next();
 		}
 	} catch {

@@ -18,7 +18,7 @@
       />
       <div class="stats">
         <span class="date">{{
-          moment(post.createdAt).format("YYYY-MM-DD")
+          moment(post.createdAt).format("DD-MM-YYYY HH:MM")
         }}</span>
       </div>
       <div id="edit-btn">
@@ -59,7 +59,7 @@
         </div>
         <div class="stats">
           <span class="date">{{
-            moment(post.createdAt).format("YYYY-MM-DD")
+            moment(post.createdAt).format("DD-MM-YYYY HH:MM")
           }}</span>
         </div>
       </div>

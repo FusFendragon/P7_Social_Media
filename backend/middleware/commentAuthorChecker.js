@@ -13,7 +13,6 @@ module.exports = (req, res, next) => {
 			},
 		})
 			.then((post) => {
-				console.log(post.userId);
 				if (post.userId === req.userId || user.administrator === true) {
 					next();
 				} else {

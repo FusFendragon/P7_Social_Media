@@ -3,7 +3,6 @@ const Comment = require("../models/comment");
 // ADD POSTS
 exports.createComment = (req, res, next) => {
 	const imageOrNot = req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null;
-	console.log(req.userId);
 	const data = {
 		userId: req.userId,
 		message: req.body.message,
@@ -47,7 +46,6 @@ exports.deleteComment = (req, res, next) => {
 	Comment.findOne({ where: { id: req.params.id } })
 		.then((comment) => {
 			if (comment.imageUrl !== null) {
-				console.log(comment.imageUrl);
 				const filename = comment.imageUrl.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {
 					Comment.destroy({ where: { id: req.params.id } })

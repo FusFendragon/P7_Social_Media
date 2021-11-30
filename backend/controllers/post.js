@@ -1,11 +1,9 @@
 const Post = require("../models/post");
 const fs = require("fs");
-const { post } = require("../app");
 
 // ADD POSTS
 exports.createPost = (req, res, next) => {
 	const imageOrNot = req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null;
-	console.log(req.userId);
 	const data = {
 		userId: req.userId,
 		message: req.body.message,
@@ -28,7 +26,6 @@ exports.createPost = (req, res, next) => {
 
 exports.modifyPost = (req, res, next) => {
 	let postObject;
-	console.log(req.body);
 	function postUpdate() {
 		Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
 			.then(() => res.status(200).json({ message: "Utilisateur Modifié !" }))
@@ -37,7 +34,6 @@ exports.modifyPost = (req, res, next) => {
 	if (req.file) {
 		Post.findOne({where: {id: req.params.id}}).then((post) => {
 			const filename = post.imageUrl.split("/images/")[1];
-			console.log(filename);
 			fs.unlink(`images/${filename}`, () => {});
 
 			postObject = {
@@ -45,8 +41,8 @@ exports.modifyPost = (req, res, next) => {
 				imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 			};
 			postUpdate();
-		});
-		// .catch((error) => res.status(500).json({ error }));
+		})
+		.catch((error) => res.status(500).json({ error }));
 	} else {
 		postObject = { ...req.body };
 		postUpdate();
@@ -59,7 +55,6 @@ exports.deletePost = (req, res, next) => {
 	Post.findOne({ where: {id: req.params.id} })
 		.then((post) => {
 			if (post.imageUrl !== null) {
-				console.log(post.imageUrl);
 				const filename = post.imageUrl.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {
 					post.destroy({ id: req.params.id })

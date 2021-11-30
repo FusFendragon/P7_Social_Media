@@ -23,7 +23,7 @@
                 <h4>
                   <span class="date"
                     >{{
-                      moment(post.createdAt).format("YYYY-MM-DD HH:MM")
+                      moment(post.createdAt).format("DD-MM-YYYY HH:MM")
                     }}:</span
                   ><br />
                   {{ post.message }}
